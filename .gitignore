@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+
+# Virtual Environment
+venv/
+env/
+
+# VSCode
+.vscode/
+.idea/
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
+!env.example
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+.pytest_cache/
