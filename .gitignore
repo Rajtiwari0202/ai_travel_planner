@@ -1,10 +1,4 @@
-# ======================================================
-# 🧠 AI Trip Planner — Clean .gitignore (Backend + Frontend)
-# ======================================================
-
-# -------------------------------
-# Python / Backend
-# -------------------------------
+# ---- Python ----
 __pycache__/
 *.py[cod]
 *$py.class
@@ -12,94 +6,76 @@ __pycache__/
 # Virtual environments
 .venv/
 venv/
-ENV/
 env/
-backend/.venv/
-backend/venv/
-backend/env/
+ENV/
+*.env
+*.venv
 
-# Distribution / packaging
+# PyInstaller
+*.spec
 build/
-develop-eggs/
 dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+# Unit test / coverage
 .coverage
+.coverage.*
+.cache
+nosetests.xml
 coverage.xml
 *.cover
-.cache
+*.py,cover
+.hypothesis/
 .pytest_cache/
-nosetests.xml
-*.spec
 
-# Database & logs
-*.sqlite3
-*.db
+# Logs
 *.log
+logs/
+*.pid
 
-# Environment & secrets
-.env
-.env.*
-*.key
-*.pem
-*.crt
-*.json
-config.py
-config_local.py
-api_keys.py
-secrets/
+# Jupyter notebooks
+.ipynb_checkpoints
 
-# -------------------------------
-# Frontend (React / Vite)
-# -------------------------------
-node_modules/
-dist/
-build/
-.cache/
-out/
-.temp/
-coverage/
+# Django / Flask / FastAPI
+db.sqlite3
+instance/
+*.db
+*.db-journal
+media/
+uploads/
 
-# Environment files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# -------------------------------
-# IDEs / Editors
-# -------------------------------
+# VSCode / Editors
 .vscode/
 .idea/
 *.sublime-project
 *.sublime-workspace
 
-# -------------------------------
-# OS & Misc
-# -------------------------------
+# OS files
 .DS_Store
 Thumbs.db
-desktop.ini
+
+# Node / Frontend (if fullstack)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+build/
+.cache/
+.next/
+out/
+coverage/
+
+# Environment / secrets
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+secrets.json
+
+# Others
 *.bak
 *.swp
 *.tmp
 *.orig
-*.rej
-
-# Git
-.gitconfig
-.git-credentials
