@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer base, components, utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-900 text-slate-100;
+  transition: background-color 200ms linear, color 200ms linear;
+}
+.leaflet-container {
+  background: #1e293b; /* Tailwind slate-800 */
+}

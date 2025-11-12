@@ -1,0 +1,6 @@
+id,airline,destination,price,duration
+1,IndiGo,Goa,8000,2h
+2,SpiceJet,Goa,7500,2h10m
+3,AirIndia,Jaipur,6000,1h20m
+4,GoAir,Goa,9500,2h
+5,Vistara,Goa,12000,1h50m
