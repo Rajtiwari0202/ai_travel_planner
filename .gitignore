@@ -1,6 +1,6 @@
-# ============================================================
-# 🌍 AI Trip Planner - Complete Git Ignore (Backend + Frontend)
-# ============================================================
+# ======================================================
+# 🧠 AI Trip Planner — Clean .gitignore (Backend + Frontend)
+# ======================================================
 
 # -------------------------------
 # Python / Backend
@@ -9,11 +9,14 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Virtual environment
+# Virtual environments
 .venv/
 venv/
 ENV/
 env/
+backend/.venv/
+backend/venv/
+backend/env/
 
 # Distribution / packaging
 build/
@@ -43,14 +46,9 @@ coverage.xml
 nosetests.xml
 *.spec
 
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# SQLite / Database files
+# Database & logs
 *.sqlite3
 *.db
-
-# Logs
 *.log
 
 # Environment & secrets
@@ -59,61 +57,49 @@ nosetests.xml
 *.key
 *.pem
 *.crt
-*.cert
 *.json
-secrets/
 config.py
 config_local.py
 api_keys.py
+secrets/
 
 # -------------------------------
-# Node / Frontend (React, Vite, Next.js)
+# Frontend (React / Vite)
 # -------------------------------
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-package-lock.json
-.pnpm-debug.log*
-
-# Build output
 dist/
 build/
 .cache/
-.next/
 out/
+.temp/
 coverage/
-temp/
 
-# Environment & runtime
+# Environment files
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
-# IDE / Editor files
+# -------------------------------
+# IDEs / Editors
+# -------------------------------
 .vscode/
 .idea/
-*.sublime-workspace
 *.sublime-project
+*.sublime-workspace
 
-# OS generated files
+# -------------------------------
+# OS & Misc
+# -------------------------------
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Miscellaneous
 *.bak
 *.swp
 *.tmp
 *.orig
 *.rej
 
-# -------------------------------
-# Git / Security
-# -------------------------------
-# Ignore sensitive git metadata
+# Git
 .gitconfig
 .git-credentials
-.gitignore_global
