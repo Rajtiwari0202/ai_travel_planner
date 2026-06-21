@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{An Explainable Multi-Agent Framework for Budget-Constrained Travel Itinerary Optimization}
+\author{TravelAgenticAI Local Demo}
+\date{Draft generated from implemented repository artifacts}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This draft describes a local-first multi-agent travel planning system that combines typed constraint extraction,
+transparent provider abstractions, deterministic budget accounting, geospatial scoring, weather-aware scheduling,
+and critic validation. The implementation avoids paid APIs by default and labels estimated, fallback, synthetic,
+open-data-inspired, and live data sources separately. Experimental results must be regenerated from the repository
+scripts before making empirical claims.
+\end{abstract}
+
+\textbf{Keywords:} multi-agent systems, itinerary optimization, explainable AI, budget constraints, local-first software.
+
+\section{Introduction}
+Travel itinerary planning requires balancing preferences, cost, time, geography, weather, and feasibility. This project
+implements an explainable decision-support system rather than a booking engine.
+
+\section{Problem Statement}
+Given a trip request $r$, candidate activities $A$, transport options $T$, accommodation options $H$, and weather
+guidance $W$, select a schedule $S$ that satisfies hard constraints and maximizes a weighted utility objective.
+
+\section{Related Work}
+Verified scholarly citations should be added here before publication. This draft intentionally does not fabricate
+citations.
+
+\section{System Architecture}
+The system uses a FastAPI backend, SQLite persistence, a typed orchestration graph, and a Vite React frontend. The
+browser receives backend-supplied coordinates and never geocodes itinerary text.
+
+\section{Agent Design}
+The implemented flow includes intent validation, destination research, transport estimation, accommodation estimation,
+weather alignment, optimization, budget reconciliation, writer, critic, and revision components.
+
+\section{Optimization Formulation}
+The deterministic objective is:
+\[
+\max_S \lambda_p P(S) + \lambda_b B(S) + \lambda_d D(S) + \lambda_w W(S) + \lambda_v V(S) + \lambda_h H(S)
+\]
+subject to:
+\[
+Cost(S) \leq Budget(r),\quad ActivitiesPerDay(S_d) \leq Cap(r),\quad DuplicateActivities(S)=0.
+\]
+The current implementation uses a transparent heuristic optimizer with deterministic budget pruning. OR-Tools CP-SAT
+is a documented future improvement.
+
+\section{Data Sources}
+The default demo uses curated local datasets and deterministic estimates. Optional Open-Meteo live weather can be
+enabled through environment configuration.
+
+\section{Experimental Methodology}
+Run \texttt{research/experiments/run\_benchmarks.py} followed by \texttt{run\_ablations.py}. The benchmark cases are
+synthetic and transparent; no user satisfaction claims are made.
+
+\section{Results}
+Populate this section from \texttt{research/results/benchmark\_results.csv} after running the scripts.
+
+\section{Ablation Study}
+Populate this section from \texttt{research/results/ablation\_summary.csv}.
+
+\section{Discussion}
+The system emphasizes data honesty, explainability, and local reproducibility over live booking completeness.
+
+\section{Threats to Validity}
+The benchmark set is synthetic, providers are simplified, and estimated prices are not live market availability.
+
+\section{Ethical and Privacy Considerations}
+The default app stores trip requests locally in SQLite and does not require paid API credentials.
+
+\section{Limitations}
+No booking, payment, real-time inventory, or verified user study is implemented.
+
+\section{Future Work}
+Future work includes richer public-data connectors, OSRM routing, CP-SAT optimization, and verified scholarly comparison.
+
+\section{Conclusion}
+The repository demonstrates a complete local-first architecture for explainable travel itinerary decision support.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

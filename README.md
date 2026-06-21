@@ -1,75 +1,123 @@
-# 🚀 TaskPilot — Your Agentic AI Task Executor
+# TravelAgenticAI
 
-> **Theme:** Agentic AI SaaS Application  
-> **Built for:** HackWithUttarPradesh 2025  
-> **Team:** Raj Tiwari  
-> **Duration:** 30 hours  
+TravelAgenticAI is a local-first agentic travel planning and itinerary optimization platform. It is an itinerary decision-support system, not a booking engine.
 
----
+The default demo uses free/open-source software, curated local datasets, deterministic estimates, SQLite persistence, and a template narrative provider. No paid API or LLM is required.
 
-## 🧩 Overview
+## Current Feature Status
 
-**TaskPilot** is an **Agentic AI assistant** that not only plans but *executes* your goals automatically.
+Implemented:
 
-You simply tell it:  
-> “Plan and start my hackathon prep.”
+- Versioned FastAPI API under `/api/v1`
+- SQLite trip persistence
+- Backend-generated agent events via Server-Sent Events
+- Deterministic destination, transport, accommodation, weather fallback, geospatial, optimization, budget, writer, critic, and revision flow
+- Budget-feasible plan generation or explicit infeasibility result
+- Backend-supplied coordinates for all scheduled activities
+- Vite React TypeScript frontend
+- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, methodology page, JSON export
+- Backend tests, frontend tests, frontend build, Ruff, and mypy configuration
+- Reproducible benchmark scripts and paper draft
 
-And it will:
-1. **Understand** your goal (via Gemini API)
-2. **Break it into actionable subtasks**
-3. **Store them** in a structured database (or Notion API)
-4. **Track progress** — and execute small steps automatically
+Not implemented:
 
-Think of it as your *personal autonomous project manager.*
+- Live booking or payment
+- Real-time flight/hotel inventory
+- Verified user-satisfaction study
+- Production authentication
+- OR-Tools CP-SAT optimizer; current optimizer is a deterministic heuristic with hard budget pruning
 
----
+## Architecture
 
-## 🧠 Tech Stack
+```text
+frontend/                 Vite React TypeScript client
+backend/app/              Canonical FastAPI backend
+backend/app/agents/       Typed orchestration flow
+backend/app/services/     Providers, weather, geospatial, optimization, narrative
+backend/app/repositories/ SQLite persistence access
+research/                 Benchmarks, figures, and paper draft
+docs/                     Architecture and API notes
+```
 
-| Layer | Technology |
-|-------|-------------|
-| Frontend | React + TailwindCSS |
-| Backend | FastAPI (Python) |
-| AI | Gemini API (Free tier) |
-| Database | SQLite / Notion API |
-| Hosting (future) | Render / Railway |
-| Version Control | Git + GitHub |
+See `docs/architecture/` for diagrams and ADRs.
 
----
+## Data Honesty
 
-## ⚙️ Setup Instructions
+The UI and API distinguish:
 
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/Rajtiwari0202/Task-Pilot.git
-cd Task-Pilot
-2️⃣ Create a virtual environment
-python -m venv venv
-venv\Scripts\activate   # for Windows
+- Estimated transport price
+- Estimated accommodation price
+- Public/open-data inspired attraction coordinates
+- Live weather when explicitly enabled
+- Fallback weather guidance when live weather is disabled or unavailable
+- Synthetic fallback destination data
 
-3️⃣ Install dependencies
-pip install -r requirements.txt
+No synthetic or estimated data is presented as live booking availability.
 
-4️⃣ Add your environment variables
-Create a file named .env in the root:
-GEMINI_API_KEY=your_free_api_key_here
-🎯 Future Scope
+## Quickstart - Windows PowerShell
 
-✅ Autonomous Task Execution (multi-agent chaining)
+```powershell
+cd F:\travelAgenticAi
 
-✅ Notion integration for real-time task tracking
+# Backend
+.\venv\Scripts\python.exe -m pip install -r backend\requirements.txt
+cd backend
+..\venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
-✅ Browser automation for task completion
+# Frontend in another terminal
+cd F:\travelAgenticAi\frontend
+npm install
+npm run dev
+```
 
-✅ Voice interface for commands
+Open `http://localhost:5173`.
 
-✅ SaaS dashboard with analytics
+## Test Commands
 
-👨‍💻 Developer
+```powershell
+cd F:\travelAgenticAi\backend
+..\venv\Scripts\python.exe -m pytest
+..\venv\Scripts\python.exe -m ruff check app tests
+..\venv\Scripts\python.exe -m mypy app
 
-Raj Tiwari
-📍 India
-💡 Passionate about AI, Automation & Agentic Intelligence
-🌐 GitHub: Rajtiwari0202
+cd F:\travelAgenticAi\frontend
+npm run typecheck
+npm test
+npm run build
+```
 
-“TaskPilot — Don’t just plan. Let AI do it for you.”
+## Research
+
+```powershell
+cd F:\travelAgenticAi
+.\venv\Scripts\python.exe research\experiments\run_benchmarks.py
+.\venv\Scripts\python.exe research\experiments\run_ablations.py
+```
+
+Outputs are written to `research/results/` and `research/figures/`.
+
+## API
+
+Core endpoints:
+
+- `GET /api/v1/health`
+- `POST /api/v1/trips`
+- `GET /api/v1/trips`
+- `GET /api/v1/trips/{trip_id}`
+- `POST /api/v1/trips/{trip_id}/revise`
+- `GET /api/v1/trips/{trip_id}/events`
+- `DELETE /api/v1/trips/{trip_id}`
+- `GET /api/v1/providers/status`
+- `GET /api/v1/destinations/search`
+
+OpenAPI docs are available at `http://localhost:8000/docs`.
+
+## Intended GitHub Repository
+
+User-designated repo: `https://github.com/Rajtiwari0202/ai_travel_planner`
+
+The local Git remote was not changed automatically because `AGENTS.md` explicitly says not to change Git remotes.
+
+## License
+
+MIT. See `LICENSE`.

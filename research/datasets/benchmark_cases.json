@@ -1,0 +1,54 @@
+[
+  {
+    "case_id": "goa_couple_balanced",
+    "origin": "Mumbai",
+    "destination": "Goa",
+    "start_date": "2026-07-10",
+    "end_date": "2026-07-12",
+    "traveler_count": 2,
+    "total_budget": 45000,
+    "interests": ["beach", "food", "culture"],
+    "pace": "balanced",
+    "transport_preference": "any",
+    "accommodation_tier": "mid_range"
+  },
+  {
+    "case_id": "jaipur_family_history",
+    "origin": "Delhi",
+    "destination": "Jaipur",
+    "start_date": "2026-08-05",
+    "end_date": "2026-08-08",
+    "traveler_count": 4,
+    "total_budget": 65000,
+    "interests": ["history", "food", "shopping"],
+    "pace": "balanced",
+    "transport_preference": "train",
+    "accommodation_tier": "mid_range"
+  },
+  {
+    "case_id": "manali_low_budget_infeasible",
+    "origin": "Chennai",
+    "destination": "Manali",
+    "start_date": "2026-09-12",
+    "end_date": "2026-09-16",
+    "traveler_count": 2,
+    "total_budget": 12000,
+    "interests": ["adventure", "nature"],
+    "pace": "active",
+    "transport_preference": "any",
+    "accommodation_tier": "budget"
+  },
+  {
+    "case_id": "kochi_solo_culture",
+    "origin": "Bengaluru",
+    "destination": "Kochi",
+    "start_date": "2026-10-20",
+    "end_date": "2026-10-21",
+    "traveler_count": 1,
+    "total_budget": 22000,
+    "interests": ["culture", "art", "food"],
+    "pace": "relaxed",
+    "transport_preference": "bus",
+    "accommodation_tier": "budget"
+  }
+]

@@ -67,9 +67,18 @@ poetry.lock
 # === Environment ===
 .env
 .env.*
-!env.example
+!.env.example
 venv/
 env/
+backend/venv/
+frontend/node_modules/
+node_modules/
+frontend/build/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+test-results/
+playwright-report/
 
 # === Editor/IDE ===
 .vscode/
@@ -80,6 +89,7 @@ env/
 *.tmp
 *.sqlite3
 *.db
+*.sqlite3-journal
 
 # === System Files ===
 .DS_Store

@@ -1,0 +1,17 @@
+case_id,system,budget_violation,itinerary_feasible,preference_coverage,mean_daily_travel_distance_km,activity_diversity,weather_conflict_count,validation_error_count,planning_latency_ms,candidate_to_selection_ratio,complete_itinerary,estimated_cost_utilization,total_score
+goa_couple_balanced,cheapest_first,0,1,0.0,81.51,1.0,2,0,4.001,2.0,1,0.3567,0.727
+goa_couple_balanced,weighted_ranking,0,1,1.0,58.6367,1.0,5,0,1.521,1.0,1,0.4781,0.682
+goa_couple_balanced,proposed_multi_agent,0,1,1.0,82.6,1.0,5,0,1.03,1.0,1,0.4781,0.642
+goa_couple_balanced,ablation_no_weather,0,1,1.0,82.7533,1.0,0,0,2.276,1.0,1,0.4781,0.75
+jaipur_family_history,cheapest_first,0,1,0.0,11.925,1.0,2,0,1.41,1.5,1,0.7635,0.876
+jaipur_family_history,weighted_ranking,0,1,1.0,10.2425,1.0,4,0,2.036,1.0,1,0.7635,0.796
+jaipur_family_history,proposed_multi_agent,0,1,1.0,11.7025,1.0,4,0,1.23,1.0,1,0.7635,0.794
+jaipur_family_history,ablation_no_weather,0,1,1.0,11.665,1.0,0,0,3.048,1.0,1,0.7635,0.88
+manali_low_budget_infeasible,cheapest_first,1,0,0.0,0.0,0.0,0,1,9.567,6.0,0,2.9101,0.356
+manali_low_budget_infeasible,weighted_ranking,1,0,0.0,0.0,0.0,0,1,40.548,6.0,0,2.7015,0.356
+manali_low_budget_infeasible,proposed_multi_agent,1,0,0.0,0.0,0.0,0,1,90.019,6.0,0,2.7015,0.356
+manali_low_budget_infeasible,ablation_no_weather,1,0,0.0,0.0,0.0,0,1,64.921,6.0,0,2.7015,0.356
+kochi_solo_culture,cheapest_first,0,1,0.0,5.1,1.0,0,0,1.007,3.0,1,0.3114,0.955
+kochi_solo_culture,weighted_ranking,0,1,1.0,20.58,1.0,0,0,3.553,1.0,1,0.4331,0.867
+kochi_solo_culture,proposed_multi_agent,0,1,1.0,4.03,1.0,0,0,0.997,3.0,1,0.3147,0.926
+kochi_solo_culture,ablation_no_weather,0,1,1.0,4.03,1.0,0,0,0.998,3.0,1,0.3147,0.926

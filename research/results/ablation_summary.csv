@@ -1,0 +1,5 @@
+system,mean_feasible,mean_budget_violation,mean_score,mean_weather_conflicts
+ablation_no_weather,0.75,0.25,0.728,0.0
+cheapest_first,0.75,0.25,0.7285,1.0
+proposed_multi_agent,0.75,0.25,0.6795,2.25
+weighted_ranking,0.75,0.25,0.6753,2.25
