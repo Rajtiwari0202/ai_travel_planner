@@ -12,7 +12,8 @@ This is not claimed as fully production-ready because authentication, real booki
 
 - Working folder: `F:\travelAgenticAi`
 - User-designated GitHub repo: `https://github.com/Rajtiwari0202/ai_travel_planner`
-- Local remote was not changed automatically because `AGENTS.md` says not to change Git remotes.
+- Current remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
+- Continuation branch: `codex/research-production-completion`
 
 ## Implemented
 
@@ -39,11 +40,16 @@ Passed:
 - E2E: `npm run e2e` -> 1 Chromium test passed
 - Research: `run_benchmarks.py` and `run_ablations.py` -> CSV/PNG outputs generated
 
+Failed or incomplete in the continuation audit:
+
+- Backend: `python -m ruff check .` against the whole backend failed because obsolete untracked prototype modules are present in the local workspace.
+- Frontend: `npm run lint` failed because no lint script is defined.
+
 Warnings and notes:
 
 - Frontend build warns that the main bundle is larger than 500 kB because map/chart libraries are bundled together.
 - npm reports dependency vulnerabilities after install; a careful dependency audit is still needed before any public deployment.
-- Git status is noisy because `venv/` appears to have been tracked before this work. `.gitignore` now ignores virtual environments, but tracked venv files need a separate `git rm --cached -r venv` cleanup if desired.
+- Current audit files: `docs/GAP_AUDIT.md`, `docs/ACCEPTANCE_MATRIX.md`, and `docs/VERIFICATION_REPORT.md`.
 
 ## Research Outputs
 
