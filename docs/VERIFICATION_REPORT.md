@@ -38,3 +38,10 @@ Last updated: 2026-06-21
 
 The repository must not be described as production-ready until the missing and partial rows in `docs/ACCEPTANCE_MATRIX.md` are resolved or explicitly documented as blocked.
 
+## Cleanup Phase Results
+
+| Command | Result | Notes |
+| --- | --- | --- |
+| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Obsolete untracked prototype folders were removed from the workspace; Ruff now checks the active backend tree cleanly. |
+| `npm run lint` in `frontend` | passed | Added ESLint 9 flat config for TypeScript frontend sources. |
+| `npm install` in `frontend` | completed with audit warnings | Added lint dependencies; npm reported 12 vulnerabilities for later security triage. |

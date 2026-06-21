@@ -25,11 +25,10 @@ Last updated: 2026-06-21
 | Saved trips | complete | `frontend/src/features/trips/SavedTripsPage.tsx` | E2E smoke | `npm run e2e` | Basic saved-trip page exists. |
 | Provider status page | partial | `frontend/src/features/planner/ProviderStatusPanel.tsx` | App smoke | `npm test` | Panel exists in planner, but no dedicated provider-status route. |
 | Research page | missing | n/a | n/a | n/a | No dedicated research route yet. |
-| Frontend lint | missing | `frontend/package.json` | n/a | `npm run lint` | Script missing at baseline. |
-| Backend Ruff gate | partial | `backend/pyproject.toml` | n/a | `ruff check .` | Fails because obsolete untracked prototype files exist in workspace. |
+| Frontend lint | complete | `frontend/package.json`, `frontend/eslint.config.js` | n/a | `npm run lint` | ESLint 9 flat-config lint passes for TypeScript frontend sources. |
+| Backend Ruff gate | complete | `backend/pyproject.toml` | n/a | `ruff check .` | Whole-backend Ruff passes after removing obsolete local scaffold from the workspace. |
 | E2E coverage | partial | `frontend/e2e/planner.spec.ts` | Playwright | `npm run e2e` | One happy-path scenario only. |
 | Research dataset breadth | partial | `research/datasets/benchmark_cases.json` | research scripts | `run_benchmarks.py` | Only four cases and four destinations. |
 | Paper citations | missing | `research/paper/paper.tex` | n/a | n/a | Related work and citation verification are placeholders. |
 | Fresh-clone verification | missing | n/a | n/a | n/a | Not run yet for this branch. |
 | CI completeness | partial | `.github/workflows/ci.yml` | GitHub Actions | n/a locally | Lacks lint, E2E, research, coverage, audit, and paper checks. |
-

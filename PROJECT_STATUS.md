@@ -40,10 +40,17 @@ Passed:
 - E2E: `npm run e2e` -> 1 Chromium test passed
 - Research: `run_benchmarks.py` and `run_ablations.py` -> CSV/PNG outputs generated
 
-Failed or incomplete in the continuation audit:
+Failed or incomplete in the continuation audit baseline:
 
 - Backend: `python -m ruff check .` against the whole backend failed because obsolete untracked prototype modules are present in the local workspace.
 - Frontend: `npm run lint` failed because no lint script is defined.
+
+Resolved in continuation branch:
+
+- Removed obsolete untracked local scaffold folders from the workspace.
+- Added frontend ESLint config and `npm run lint`.
+- Re-ran `python -m ruff check .` in `backend`: passed.
+- Re-ran `npm run lint` in `frontend`: passed.
 
 Warnings and notes:
 
