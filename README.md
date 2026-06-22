@@ -15,8 +15,8 @@ Implemented:
 - Budget-feasible plan generation or explicit infeasibility result
 - Backend-supplied coordinates for all scheduled activities
 - Vite React TypeScript frontend
-- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, methodology page, JSON export
-- Backend tests, frontend tests, frontend build, Ruff, and mypy configuration
+- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, JSON export
+- Backend tests, frontend tests, frontend build, Ruff, mypy, dependency audits, coverage, E2E, and CI configuration
 - OR-Tools CP-SAT optimizer with deterministic heuristic fallback
 - Reproducible benchmark scripts and paper draft
 
@@ -77,14 +77,21 @@ Open `http://localhost:5173`.
 
 ```powershell
 cd F:\travelAgenticAi\backend
+..\venv\Scripts\python.exe -m pip install pip-audit coverage
 ..\venv\Scripts\python.exe -m pytest
-..\venv\Scripts\python.exe -m ruff check app tests
+..\venv\Scripts\python.exe -m ruff check .
 ..\venv\Scripts\python.exe -m mypy app
+..\venv\Scripts\python.exe -m coverage run -m pytest
+..\venv\Scripts\python.exe -m coverage report --fail-under=70
+..\venv\Scripts\python.exe -m pip_audit -r requirements.txt
 
 cd F:\travelAgenticAi\frontend
+npm audit
+npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run e2e
 ```
 
 ## Research
@@ -93,6 +100,7 @@ npm run build
 cd F:\travelAgenticAi
 .\venv\Scripts\python.exe research\experiments\run_benchmarks.py
 .\venv\Scripts\python.exe research\experiments\run_ablations.py
+.\venv\Scripts\python.exe research\experiments\run_all.py
 ```
 
 Outputs are written to `research/results/` and `research/figures/`.

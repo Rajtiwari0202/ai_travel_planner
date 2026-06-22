@@ -3,3 +3,5 @@
 The repository includes Dockerfiles and `docker-compose.yml` for local execution. Production deployment requires adding authentication, HTTPS termination, backups, and environment-specific CORS restrictions.
 
 Do not assume any free hosting or API tier will remain available.
+
+The backend and frontend Dockerfiles run as non-root users. Local image build verification was blocked on 2026-06-22 because Docker Desktop's Linux engine was not running; GitHub Actions is configured to build both images.

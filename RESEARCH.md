@@ -9,7 +9,7 @@ The included benchmark cases are synthetic and transparent. They are not a user 
 - 12 transparent synthetic cases
 - 10 Indian destinations
 - Cheapest-first, weighted ranker, CP-SAT optimizer, CP-SAT without weather, and CP-SAT without geospatial clustering
-- Metrics include feasibility, budget violations, preference coverage, travel distance, weather conflicts, validation errors, latency, budget utilization, and alternative availability
+- Metrics include feasibility, budget violations, preference coverage, travel distance, weather conflicts, validation errors, deterministic latency proxy, budget utilization, and alternative availability
 
 ## Run Experiments
 

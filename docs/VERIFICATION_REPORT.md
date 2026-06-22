@@ -1,61 +1,44 @@
 # Verification Report
 
-Last updated: 2026-06-21
+Last updated: 2026-06-22
 
 ## Environment
 
 - Repository: `F:\travelAgenticAi`
-- Branch after setup: `codex/research-production-completion`
+- Branch: `codex/research-production-completion`
 - Remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
-- Backend runtime used: `.\venv\Scripts\python.exe`
-- Frontend runtime used: local Node/npm from PowerShell
+- Backend runtime used locally: `.\venv\Scripts\python.exe`
+- Frontend runtime used locally: Node `v22.14.0`, npm `11.16.0`
 
-## Baseline Results
+## Historical Baseline
+
+The first continuation audit found a partially implemented app with passing backend tests, frontend typecheck, frontend test, build, E2E, and research scripts. It also found a whole-backend Ruff failure caused by obsolete untracked scaffold folders and a missing frontend lint script. Those issues were resolved earlier on this branch.
+
+## Current Verification
 
 | Command | Result | Notes |
 | --- | --- | --- |
-| `git status` | passed | Showed obsolete untracked scaffold files before cleanup. |
-| `git branch --show-current` | passed | `main` before branch creation. |
-| `git remote -v` | passed | Remote points to intended repo. |
-| `git log --oneline -10` | passed | Latest commit before continuation: `e81899b`. |
-| `..\venv\Scripts\python.exe -m pytest` in `backend` | passed | 7 passed in 9.30s. |
-| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | failed | Obsolete untracked prototype modules caused 19 Ruff findings. |
-| `..\venv\Scripts\python.exe -m mypy app` in `backend` | passed | Success, 28 source files. |
+| `..\venv\Scripts\python.exe -m pytest` in `backend` | passed | 11 passed, 1 Starlette `TestClient` deprecation warning. |
+| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Whole active backend tree passes. |
+| `..\venv\Scripts\python.exe -m mypy app` in `backend` | passed | Success, 30 source files. |
+| `..\venv\Scripts\python.exe -m coverage run -m pytest` plus `coverage report --fail-under=70` | passed | 91% total coverage. |
+| `..\venv\Scripts\python.exe -m pip_audit -r requirements.txt` in `backend` | passed | No known vulnerabilities found after upgrading FastAPI, Starlette, python-dotenv, pytest, and pytest-asyncio. |
+| `npm audit` in `frontend` | passed | 0 vulnerabilities after upgrading Vitest, Vite, PostCSS, Tailwind, Autoprefixer, and Playwright test tooling. |
+| `npm run lint` in `frontend` | passed | ESLint 9 flat config checks TypeScript frontend sources. |
 | `npm run typecheck` in `frontend` | passed | TypeScript passed. |
-| `npm run lint` in `frontend` | failed | Missing script. |
-| `npm test -- --run` in `frontend` | passed | 1 Vitest test passed; npm warned about unknown `--run` config. |
-| `npm run build` in `frontend` | passed with warnings | Main JS chunk ~902 kB; browser data stale. |
-| `npm run e2e` in `frontend` | passed | 1 Playwright Chromium test passed. |
-| `.\venv\Scripts\python.exe research\experiments\run_benchmarks.py` | passed | Wrote benchmark CSV and PNG. |
-| `.\venv\Scripts\python.exe research\experiments\run_ablations.py` | passed | Wrote ablation CSV. |
+| `npm test` in `frontend` | passed | 1 Vitest test passed with lazy route loading. |
+| `npm run build` in `frontend` | passed with warning | Route-level chunks were emitted; planner chunk is still above 500 kB because map/chart libraries remain in that route. |
+| `npm run e2e` in `frontend` | passed | 1 Playwright Chromium trip-planning smoke test passed against managed local backend/frontend servers. |
+| `.\venv\Scripts\python.exe research\experiments\run_all.py` | passed | Regenerated benchmark CSV, ablation CSV, and benchmark PNG. |
+| High-confidence secret scan | passed | No matches for private-key, bearer-token, OpenAI-key, GitHub-token, Slack-token, or populated env-secret patterns. |
+| `docker build -f backend/Dockerfile ...` | blocked locally | Docker CLI exists, but Docker Desktop Linux engine is not running: `dockerDesktopLinuxEngine` pipe missing. |
+| `docker build -f frontend/Dockerfile ...` | blocked locally | Same local Docker daemon blocker. CI is configured to build both images. |
 
 ## Current Gate Status
 
-- Functional gate: partial.
-- Engineering gate: partial.
-- Research gate: partial.
-- UX gate: partial.
+- Functional gate: partial. The local planner works end to end, but live booking, payments, account auth, and real inventory remain out of scope.
+- Engineering gate: mostly complete for this local demo. CI now includes secret scan, backend audit, coverage, lint, mypy, pytest, frontend audit, lint, typecheck, test, build, E2E, research, and Docker build jobs.
+- Research gate: partial. Benchmarks and ablations are reproducible; scholarly related-work citations and user studies are intentionally not claimed.
+- UX gate: partial. Planner, saved trips, providers, research, methodology, map, budget, revision, and export views exist; accessibility automation and broader E2E coverage remain thin.
 
-The repository must not be described as production-ready until the missing and partial rows in `docs/ACCEPTANCE_MATRIX.md` are resolved or explicitly documented as blocked.
-
-## Cleanup Phase Results
-
-| Command | Result | Notes |
-| --- | --- | --- |
-| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Obsolete untracked prototype folders were removed from the workspace; Ruff now checks the active backend tree cleanly. |
-| `npm run lint` in `frontend` | passed | Added ESLint 9 flat config for TypeScript frontend sources. |
-| `npm install` in `frontend` | completed with audit warnings | Added lint dependencies; npm reported 12 vulnerabilities for later security triage. |
-
-## Optimizer And Research Phase Results
-
-| Command | Result | Notes |
-| --- | --- | --- |
-| `..\venv\Scripts\python.exe -m pytest` in `backend` | passed | 11 passed after adding budget, same-day, CP-SAT, and weather-ablation tests. |
-| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Active backend tree passes Ruff. |
-| `..\venv\Scripts\python.exe -m mypy app` in `backend` | passed | Success, 30 source files. |
-| `npm run lint` in `frontend` | passed | ESLint passes after UI optimizer metadata changes. |
-| `npm run typecheck` in `frontend` | passed | TypeScript passes. |
-| `npm test` in `frontend` | passed | 1 Vitest test passed. |
-| `npm run build` in `frontend` | passed with warnings | Vite build passes; chunk-size and stale browser-data warnings remain. |
-| `npm run e2e` in `frontend` | passed | 1 Playwright Chromium test passed after restarting the backend so API/UI schemas matched. |
-| `.\venv\Scripts\python.exe research\experiments\run_all.py` | passed | Regenerated 60 benchmark rows, ablation summary, and benchmark PNG. |
+The repository must not be described as a hosted production booking product. It is now a hardened local-first demo and research prototype.

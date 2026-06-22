@@ -52,6 +52,15 @@ Acceptance criteria:
 - Production build passes.
 - Documentation accurately states implemented and remaining items.
 - Docker and GitHub Actions scaffolding are present.
+- Dependency audits, secret scan, coverage, E2E, research smoke, and Docker builds are configured in CI.
+
+### Phase 5 - Fresh Clone Verification
+
+Acceptance criteria:
+- Clone the branch into a clean folder.
+- Install backend and frontend dependencies from committed files.
+- Run backend, frontend, research, and E2E gates from documented commands.
+- Record results in `docs/FRESH_CLONE_VERIFICATION.md`.
 
 ## Out of Scope for This Local Completion Pass
 

@@ -96,7 +96,9 @@ synthetic benchmark.
 The system emphasizes data honesty, explainability, and local reproducibility over live booking completeness.
 
 \section{Threats to Validity}
-The benchmark set is synthetic, providers are simplified, and estimated prices are not live market availability.
+The benchmark set is synthetic, providers are simplified, estimated prices are not live market availability, and
+reported latency is a deterministic proxy for comparative regression tracking rather than a wall-clock performance
+measurement.
 
 \section{Ethical and Privacy Considerations}
 The default app stores trip requests locally in SQLite and does not require paid API credentials.
@@ -105,7 +107,8 @@ The default app stores trip requests locally in SQLite and does not require paid
 No booking, payment, real-time inventory, or verified user study is implemented.
 
 \section{Future Work}
-Future work includes richer public-data connectors, OSRM routing, CP-SAT optimization, and verified scholarly comparison.
+Future work includes richer public-data connectors, OSRM routing matrices, deeper CP-SAT constraint modeling, and
+verified scholarly comparison.
 
 \section{Conclusion}
 The repository demonstrates a complete local-first architecture for explainable travel itinerary decision support.

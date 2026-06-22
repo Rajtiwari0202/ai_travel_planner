@@ -1,12 +1,12 @@
 # Project Status
 
-Last updated: 2026-06-21
+Last updated: 2026-06-22
 
 ## Summary
 
-TravelAgenticAI has been upgraded from a mock prototype into a local-first, full-stack, explainable agentic travel-planning demo. It now works without paid APIs or an LLM, persists trips locally, streams real backend agent events, and includes reproducible research artifacts.
+TravelAgenticAI is now a hardened local-first, full-stack, explainable agentic travel-planning demo. It works without paid APIs or an LLM, persists trips locally, streams backend agent events, includes CP-SAT optimization with deterministic fallbacks, and ships reproducible research artifacts.
 
-This is not claimed as fully production-ready because authentication, real booking inventory, a CP-SAT optimizer, and a verified user study are not implemented.
+This is not a hosted production booking product. Authentication, live booking inventory, payments, production data contracts, and verified user studies remain outside the current local completion pass.
 
 ## Repository Target
 
@@ -21,46 +21,42 @@ This is not claimed as fully production-ready because authentication, real booki
 - Canonical FastAPI app under `backend/app`.
 - Versioned API under `/api/v1`.
 - SQLite persistence for trips and agent events.
-- Server-Sent Events for real backend planning progress.
+- Server-Sent Events for backend planning progress.
 - Deterministic local providers for destination, activity, transport, accommodation, weather fallback, geospatial scoring, budget reconciliation, itinerary writing, validation, and revision.
-- Vite React TypeScript frontend with planner, event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, methodology page, and JSON export.
+- OR-Tools CP-SAT itinerary optimizer with deterministic cheapest-first and weighted-ranker fallbacks/baselines.
+- Canonical Decimal-based budget model with room-count accommodation costing.
+- Vite React TypeScript frontend with planner, event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, and JSON export.
+- Route-level frontend lazy loading.
 - Research benchmark dataset, benchmark runner, ablation runner, generated CSVs, generated PNG figure, and conservative paper draft.
-- Dockerfiles, `docker-compose.yml`, `.env.example`, CI workflow, and project docs.
+- Dockerfiles with non-root runtime users, `docker-compose.yml`, `.env.example`, expanded CI workflow, and project docs.
 
-## Verification Results
+## Current Verification Results
 
 Passed:
 
-- Backend: `python -m pytest` -> 7 passed
-- Backend: `python -m ruff check app tests` -> all checks passed
-- Backend: `python -m mypy app` -> success, 28 source files
+- Backend: `python -m pytest` -> 11 passed
+- Backend: `python -m ruff check .` -> all checks passed
+- Backend: `python -m mypy app` -> success, 30 source files
+- Backend: `coverage run -m pytest` plus `coverage report --fail-under=70` -> 91% coverage
+- Backend: `pip_audit -r requirements.txt` -> no known vulnerabilities
+- Frontend: `npm audit` -> 0 vulnerabilities
+- Frontend: `npm run lint` -> passed
 - Frontend: `npm run typecheck` -> passed
 - Frontend: `npm test` -> 1 test passed
 - Frontend: `npm run build` -> passed
 - E2E: `npm run e2e` -> 1 Chromium test passed
-- Research: `run_benchmarks.py` and `run_ablations.py` -> CSV/PNG outputs generated
+- Research: `research/experiments/run_all.py` -> benchmark CSV, ablation CSV, and PNG regenerated
+- Secret scan: high-confidence private key/token/password patterns -> no matches
 
-Failed or incomplete in the continuation audit baseline:
+Blocked locally:
 
-- Backend: `python -m ruff check .` against the whole backend failed because obsolete untracked prototype modules are present in the local workspace.
-- Frontend: `npm run lint` failed because no lint script is defined.
-
-Resolved in continuation branch:
-
-- Removed obsolete untracked local scaffold folders from the workspace.
-- Added frontend ESLint config and `npm run lint`.
-- Re-ran `python -m ruff check .` in `backend`: passed.
-- Re-ran `npm run lint` in `frontend`: passed.
-- Added OR-Tools CP-SAT itinerary optimization with deterministic heuristic fallback.
-- Added a canonical Decimal-based budget service and reconciliation tests.
-- Expanded backend planner tests from 7 to 11 tests.
-- Expanded research dataset to 12 synthetic cases across 10 Indian destinations and regenerated 60 benchmark rows.
-- Re-ran `npm run e2e` after restarting the local backend: passed.
+- Docker image builds could not be run because Docker Desktop's Linux engine was not running. The CI workflow is configured to build both images.
 
 Warnings and notes:
 
-- Frontend build warns that the main bundle is larger than 500 kB because map/chart libraries are bundled together.
-- npm reports dependency vulnerabilities after install; a careful dependency audit is still needed before any public deployment.
+- Frontend build still warns that the lazy-loaded planner chunk is larger than 500 kB because map/chart libraries live in that route.
+- Backend tests show a Starlette `TestClient` deprecation warning for the current FastAPI/Starlette test client stack.
+- Fresh-clone verification is still pending.
 - Current audit files: `docs/GAP_AUDIT.md`, `docs/ACCEPTANCE_MATRIX.md`, and `docs/VERIFICATION_REPORT.md`.
 
 ## Research Outputs
@@ -73,7 +69,8 @@ Warnings and notes:
 ## Remaining Limitations
 
 - No live booking, payment, or real-time flight/hotel availability.
-- Current optimizer uses OR-Tools CP-SAT when installed and falls back to deterministic heuristics otherwise. It still does not model every production constraint such as verified opening hours, OSRM route matrices, or arrival/departure windows.
+- No production auth, user accounts, hosted secrets management, or cloud deployment hardening.
+- Optimizer does not yet model every production constraint such as verified opening hours, OSRM route matrices, or arrival/departure windows.
 - Live weather is optional and disabled by default.
-- No production auth, user accounts, or cloud deployment hardening.
+- E2E and accessibility coverage are still thin.
 - Paper related work remains intentionally uncited until scholarly sources are verified; `research/paper/CITATION_VERIFICATION.md` records this limitation.
