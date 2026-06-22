@@ -10,7 +10,8 @@
     "interests": ["beach", "food", "culture"],
     "pace": "balanced",
     "transport_preference": "any",
-    "accommodation_tier": "mid_range"
+    "accommodation_tier": "mid_range",
+    "scenario": "rainy_monsoon"
   },
   {
     "case_id": "jaipur_family_history",
@@ -23,7 +24,8 @@
     "interests": ["history", "food", "shopping"],
     "pace": "balanced",
     "transport_preference": "train",
-    "accommodation_tier": "mid_range"
+    "accommodation_tier": "mid_range",
+    "scenario": "family_medium_budget"
   },
   {
     "case_id": "manali_low_budget_infeasible",
@@ -36,19 +38,136 @@
     "interests": ["adventure", "nature"],
     "pace": "active",
     "transport_preference": "any",
-    "accommodation_tier": "budget"
+    "accommodation_tier": "budget",
+    "scenario": "infeasible_budget"
   },
   {
-    "case_id": "kochi_solo_culture",
+    "case_id": "kochi_solo_culture_same_day",
     "origin": "Bengaluru",
     "destination": "Kochi",
     "start_date": "2026-10-20",
-    "end_date": "2026-10-21",
+    "end_date": "2026-10-20",
     "traveler_count": 1,
-    "total_budget": 22000,
+    "total_budget": 18000,
     "interests": ["culture", "art", "food"],
     "pace": "relaxed",
     "transport_preference": "bus",
-    "accommodation_tier": "budget"
+    "accommodation_tier": "budget",
+    "scenario": "same_day"
+  },
+  {
+    "case_id": "varanasi_group_spiritual",
+    "origin": "Lucknow",
+    "destination": "Varanasi",
+    "start_date": "2026-11-03",
+    "end_date": "2026-11-06",
+    "traveler_count": 6,
+    "total_budget": 90000,
+    "interests": ["spiritual", "food", "history"],
+    "pace": "balanced",
+    "transport_preference": "train",
+    "accommodation_tier": "mid_range",
+    "scenario": "group_travel"
+  },
+  {
+    "case_id": "udaipur_couple_premium",
+    "origin": "Ahmedabad",
+    "destination": "Udaipur",
+    "start_date": "2026-12-12",
+    "end_date": "2026-12-14",
+    "traveler_count": 2,
+    "total_budget": 80000,
+    "interests": ["heritage", "art", "lakes"],
+    "pace": "relaxed",
+    "transport_preference": "any",
+    "accommodation_tier": "premium",
+    "scenario": "high_budget"
+  },
+  {
+    "case_id": "rishikesh_solo_adventure",
+    "origin": "Delhi",
+    "destination": "Rishikesh",
+    "start_date": "2026-06-24",
+    "end_date": "2026-06-27",
+    "traveler_count": 1,
+    "total_budget": 30000,
+    "interests": ["adventure", "wellness", "nature"],
+    "pace": "active",
+    "transport_preference": "bus",
+    "accommodation_tier": "budget",
+    "scenario": "rainy_adventure"
+  },
+  {
+    "case_id": "munnar_family_nature_accessible",
+    "origin": "Kochi",
+    "destination": "Munnar",
+    "start_date": "2027-01-15",
+    "end_date": "2027-01-21",
+    "traveler_count": 4,
+    "total_budget": 95000,
+    "interests": ["nature", "tea", "family"],
+    "pace": "balanced",
+    "transport_preference": "bus",
+    "accommodation_tier": "mid_range",
+    "accessibility": ["step-free preferred"],
+    "scenario": "seven_day_accessibility"
+  },
+  {
+    "case_id": "hampi_friends_history",
+    "origin": "Hyderabad",
+    "destination": "Hampi",
+    "start_date": "2026-11-20",
+    "end_date": "2026-11-22",
+    "traveler_count": 3,
+    "total_budget": 42000,
+    "interests": ["history", "architecture", "cycling"],
+    "pace": "active",
+    "transport_preference": "train",
+    "accommodation_tier": "budget",
+    "scenario": "friends_low_medium_budget"
+  },
+  {
+    "case_id": "amritsar_food_history",
+    "origin": "Delhi",
+    "destination": "Amritsar",
+    "start_date": "2026-12-03",
+    "end_date": "2026-12-05",
+    "traveler_count": 2,
+    "total_budget": 36000,
+    "interests": ["food", "history", "spiritual"],
+    "pace": "balanced",
+    "transport_preference": "train",
+    "accommodation_tier": "budget",
+    "scenario": "food_history"
+  },
+  {
+    "case_id": "goa_budget_exclusions",
+    "origin": "Pune",
+    "destination": "Goa",
+    "start_date": "2026-08-16",
+    "end_date": "2026-08-17",
+    "traveler_count": 2,
+    "total_budget": 26000,
+    "interests": ["food", "culture"],
+    "pace": "balanced",
+    "transport_preference": "bus",
+    "accommodation_tier": "budget",
+    "excluded_activities": ["kayak", "beach"],
+    "indoor_outdoor": "mostly_indoor",
+    "scenario": "rainy_exclusions"
+  },
+  {
+    "case_id": "sparse_destination_fallback",
+    "origin": "Mumbai",
+    "destination": "Orchha",
+    "start_date": "2026-10-05",
+    "end_date": "2026-10-07",
+    "traveler_count": 2,
+    "total_budget": 30000,
+    "interests": ["history", "architecture"],
+    "pace": "balanced",
+    "transport_preference": "train",
+    "accommodation_tier": "budget",
+    "scenario": "sparse_data_destination"
   }
 ]

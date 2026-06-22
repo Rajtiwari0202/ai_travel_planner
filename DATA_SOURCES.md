@@ -9,6 +9,8 @@ Default data is local and transparent:
 - Weather: fallback seasonal guidance by default
 - Optional live weather: Open-Meteo when `ENABLE_LIVE_WEATHER=true`
 
+The bundled destination dataset currently includes Goa, Jaipur, Kochi, Manali, Varanasi, Udaipur, Rishikesh, Munnar, Hampi, and Amritsar. Unknown destinations use a clearly labeled synthetic fallback profile.
+
 No default provider returns live booking inventory.
 
 ## Labels

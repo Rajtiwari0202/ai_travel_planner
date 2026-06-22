@@ -87,7 +87,13 @@ class ProviderMetadata(BaseModel):
     data_kind: DataKind
     fetched_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     confidence: float = Field(default=0.8, ge=0, le=1)
+    provider_name: str | None = None
+    source_url: str | None = None
+    source_identifier: str | None = None
     notes: str | None = None
+    warnings: list[str] = Field(default_factory=list)
+    error: str | None = None
+    currency: str | None = None
 
 
 class TripPreferences(BaseModel):
@@ -263,6 +269,18 @@ class ScoreBreakdown(BaseModel):
     explanation: list[str]
 
 
+class OptimizerMetadata(BaseModel):
+    method: str = "unknown"
+    engine: str = "heuristic"
+    objective_score: float = Field(default=0, ge=0, le=1)
+    normalized_score_breakdown: dict[str, float] = Field(default_factory=dict)
+    binding_constraints: list[str] = Field(default_factory=list)
+    rejected_candidates: list[str] = Field(default_factory=list)
+    assumptions: list[str] = Field(default_factory=list)
+    feasibility_status: Literal["feasible", "infeasible", "fallback_feasible", "unknown"] = "unknown"
+    alternatives_considered: int = Field(default=0, ge=0)
+
+
 class ValidationReport(BaseModel):
     status: Literal["passed", "warning", "failed"]
     errors: list[str] = Field(default_factory=list)
@@ -275,6 +293,15 @@ class RevisionRecord(BaseModel):
     requested_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     instruction: str
     changes: list[str]
+    previous_version_id: str | None = None
+    new_version_id: str = Field(default_factory=lambda: str(uuid4()))
+    requested_change: str | None = None
+    actual_changes: list[str] = Field(default_factory=list)
+    cost_difference: float = 0
+    score_difference: float = 0
+    affected_days: list[date] = Field(default_factory=list)
+    new_warnings: list[str] = Field(default_factory=list)
+    unchanged_constraints: list[str] = Field(default_factory=list)
 
 
 class AlternativePlan(BaseModel):
@@ -295,6 +322,7 @@ class TripPlan(BaseModel):
     days: list[TripDay]
     budget: BudgetBreakdown
     score: ScoreBreakdown
+    optimizer: OptimizerMetadata = Field(default_factory=OptimizerMetadata)
     alternatives: list[AlternativePlan]
     validation: ValidationReport
     assumptions: list[str]

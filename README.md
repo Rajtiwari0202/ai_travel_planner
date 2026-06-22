@@ -17,6 +17,7 @@ Implemented:
 - Vite React TypeScript frontend
 - Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, methodology page, JSON export
 - Backend tests, frontend tests, frontend build, Ruff, and mypy configuration
+- OR-Tools CP-SAT optimizer with deterministic heuristic fallback
 - Reproducible benchmark scripts and paper draft
 
 Not implemented:
@@ -25,7 +26,7 @@ Not implemented:
 - Real-time flight/hotel inventory
 - Verified user-satisfaction study
 - Production authentication
-- OR-Tools CP-SAT optimizer; current optimizer is a deterministic heuristic with hard budget pruning
+- Fully modeled booking-grade constraints such as verified opening hours, OSRM route matrices, and arrival/departure windows
 
 ## Architecture
 

@@ -51,6 +51,11 @@ Resolved in continuation branch:
 - Added frontend ESLint config and `npm run lint`.
 - Re-ran `python -m ruff check .` in `backend`: passed.
 - Re-ran `npm run lint` in `frontend`: passed.
+- Added OR-Tools CP-SAT itinerary optimization with deterministic heuristic fallback.
+- Added a canonical Decimal-based budget service and reconciliation tests.
+- Expanded backend planner tests from 7 to 11 tests.
+- Expanded research dataset to 12 synthetic cases across 10 Indian destinations and regenerated 60 benchmark rows.
+- Re-ran `npm run e2e` after restarting the local backend: passed.
 
 Warnings and notes:
 
@@ -68,7 +73,7 @@ Warnings and notes:
 ## Remaining Limitations
 
 - No live booking, payment, or real-time flight/hotel availability.
-- Current optimizer is a deterministic heuristic, not OR-Tools CP-SAT.
+- Current optimizer uses OR-Tools CP-SAT when installed and falls back to deterministic heuristics otherwise. It still does not model every production constraint such as verified opening hours, OSRM route matrices, or arrival/departure windows.
 - Live weather is optional and disabled by default.
 - No production auth, user accounts, or cloud deployment hardening.
-- Paper related-work citations are intentionally placeholders until verified.
+- Paper related work remains intentionally uncited until scholarly sources are verified; `research/paper/CITATION_VERIFICATION.md` records this limitation.

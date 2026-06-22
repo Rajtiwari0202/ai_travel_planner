@@ -18,8 +18,20 @@ export function ItineraryResults({ plan }: { plan: TripPlan }) {
 
       <div className="mt-5 grid gap-3 md:grid-cols-3">
         <Fact icon={TrainFront} label="Transport" value={`${plan.transport.mode} estimate`} />
-        <Fact icon={BedDouble} label="Stay" value={`${plan.accommodation.name} · ${plan.budget.room_count} room(s)`} />
+        <Fact icon={BedDouble} label="Stay" value={`${plan.accommodation.name} / ${plan.budget.room_count} room(s)`} />
         <Fact icon={IndianRupee} label="Total" value={`${plan.budget.currency} ${plan.budget.total.toLocaleString()}`} />
+      </div>
+
+      <div className="mt-5 rounded-lg border border-ink/10 bg-paper p-4">
+        <h3 className="font-semibold text-ink">Optimizer explanation</h3>
+        <p className="mt-1 text-sm text-ink/65">
+          {plan.optimizer.engine.replace(/_/g, " ")} / {plan.optimizer.method.replace(/_/g, " ")} /{" "}
+          {(plan.optimizer.objective_score * 100).toFixed(0)}% objective score
+        </p>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          <InfoList title="Binding constraints" items={plan.optimizer.binding_constraints.slice(0, 5)} />
+          <InfoList title="Rejected candidates" items={plan.optimizer.rejected_candidates.slice(0, 5)} />
+        </div>
       </div>
 
       {(plan.validation.errors.length > 0 || plan.validation.warnings.length > 0) && (
@@ -61,7 +73,7 @@ export function ItineraryResults({ plan }: { plan: TripPlan }) {
                           {index + 1}. {activity.title}
                         </p>
                         <p className="mt-1 text-xs text-ink/60">
-                          {activity.start_time.slice(0, 5)}-{activity.end_time.slice(0, 5)} · {activity.duration_minutes} min ·{" "}
+                          {activity.start_time.slice(0, 5)}-{activity.end_time.slice(0, 5)} / {activity.duration_minutes} min /{" "}
                           {plan.budget.currency} {activity.estimated_cost.toLocaleString()}
                         </p>
                       </div>
@@ -71,7 +83,7 @@ export function ItineraryResults({ plan }: { plan: TripPlan }) {
                     </div>
                     <p className="mt-2 text-sm leading-6 text-ink/70">{activity.rationale}</p>
                     <p className="mt-2 text-xs text-ink/55">
-                      Source: {activity.source_label} · {activity.location.latitude.toFixed(4)},{" "}
+                      Source: {activity.source_label} / {activity.location.latitude.toFixed(4)},{" "}
                       {activity.location.longitude.toFixed(4)}
                     </p>
                   </div>

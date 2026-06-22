@@ -3,10 +3,10 @@
 ## Baseline Audit
 
 - Existing repository path: `F:\travelAgenticAi`
-- Current Git branch: `main`
-- Current remote: `https://github.com/Rajtiwari0202/Task-Pilot`
+- Original baseline branch: `main`
+- Continuation branch: `codex/research-production-completion`
+- Current remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
 - Intended repository from user: `https://github.com/Rajtiwari0202/ai_travel_planner`
-- Remote was not changed automatically because `AGENTS.md` explicitly says not to change Git remotes.
 
 ## Existing Failures Found
 
@@ -16,6 +16,8 @@
 - Backend dependencies in `backend/requirements.txt` are newer than the installed virtual environment.
 
 ## Phases
+
+Continuation note: the original canonical backend/frontend phases are now implemented. The current branch is focused on closing the stricter completion gates from `docs/ACCEPTANCE_MATRIX.md`.
 
 ### Phase 1 - Canonical Backend
 
@@ -40,6 +42,7 @@ Acceptance criteria:
 - Benchmark script runs deterministically.
 - Results CSV and generated figure are produced from actual local planner runs.
 - Paper draft describes implemented methods and avoids fabricated citations or results.
+- OR-Tools CP-SAT optimizer and deterministic baseline modes run against the same benchmark dataset.
 
 ### Phase 4 - Quality, Docs, CI
 
@@ -54,4 +57,5 @@ Acceptance criteria:
 
 - Paid booking, payment, or live availability.
 - Guaranteed live weather when `ENABLE_LIVE_WEATHER=false`.
-- Automatic GitHub push.
+- Force-pushing `main`.
+- Claiming production readiness before all completion gates pass.

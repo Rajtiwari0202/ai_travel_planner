@@ -45,3 +45,17 @@ The repository must not be described as production-ready until the missing and p
 | `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Obsolete untracked prototype folders were removed from the workspace; Ruff now checks the active backend tree cleanly. |
 | `npm run lint` in `frontend` | passed | Added ESLint 9 flat config for TypeScript frontend sources. |
 | `npm install` in `frontend` | completed with audit warnings | Added lint dependencies; npm reported 12 vulnerabilities for later security triage. |
+
+## Optimizer And Research Phase Results
+
+| Command | Result | Notes |
+| --- | --- | --- |
+| `..\venv\Scripts\python.exe -m pytest` in `backend` | passed | 11 passed after adding budget, same-day, CP-SAT, and weather-ablation tests. |
+| `..\venv\Scripts\python.exe -m ruff check .` in `backend` | passed | Active backend tree passes Ruff. |
+| `..\venv\Scripts\python.exe -m mypy app` in `backend` | passed | Success, 30 source files. |
+| `npm run lint` in `frontend` | passed | ESLint passes after UI optimizer metadata changes. |
+| `npm run typecheck` in `frontend` | passed | TypeScript passes. |
+| `npm test` in `frontend` | passed | 1 Vitest test passed. |
+| `npm run build` in `frontend` | passed with warnings | Vite build passes; chunk-size and stale browser-data warnings remain. |
+| `npm run e2e` in `frontend` | passed | 1 Playwright Chromium test passed after restarting the backend so API/UI schemas matched. |
+| `.\venv\Scripts\python.exe research\experiments\run_all.py` | passed | Regenerated 60 benchmark rows, ablation summary, and benchmark PNG. |

@@ -27,7 +27,7 @@ export function SavedTripsPage() {
                 {trip.request.origin} to {trip.request.destination}
               </h2>
               <p className="mt-1 text-sm text-ink/65">
-                {trip.request.start_date} to {trip.request.end_date} · {trip.request.traveler_count} traveler(s)
+                {trip.request.start_date} to {trip.request.end_date} / {trip.request.traveler_count} traveler(s)
               </p>
               <Link className="mt-3 inline-flex rounded-md bg-ink px-3 py-2 text-sm font-semibold text-white" to="/">
                 Open planner

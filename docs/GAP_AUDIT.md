@@ -47,7 +47,7 @@ The planner correctly avoids multiplying hotel nightly price by traveler count a
 
 Status: partial.
 
-The bundled providers are transparent and free by default, but provider metadata lacks a provider-name field, source URL/source identifier separation, warning/error metadata, caching, retry metadata, concurrency controls, and geocoding/routing adapters. The default dataset covers only four destinations.
+The bundled providers are transparent and free by default, and the curated destination dataset now covers ten Indian destinations. Provider metadata has been expanded, but caching, retry metadata, concurrency controls, geocoding adapters, and routing adapters remain incomplete.
 
 ### Agent Orchestration
 
@@ -83,7 +83,7 @@ Secrets are ignored and no paid API is required. Missing: automated secret scan 
 
 Status: partial.
 
-Research scripts run, but the dataset has only four cases, baselines are preference mutations over the same planner rather than independent baseline implementations, and the paper contains placeholder citation/result sections. Citation verification and reproducible paper tables are missing.
+Research scripts run on a 12-case, 10-destination synthetic benchmark with five optimizer/baseline modes. Citation verification remains incomplete because no scholarly references have been inserted yet.
 
 ### Fresh Clone
 
@@ -96,4 +96,3 @@ Fresh-clone verification has not been run for this branch.
 Status: partial.
 
 GitHub Actions runs backend and frontend basic gates, but does not run frontend lint, E2E, research smoke tests, coverage, audit/secret scan, or paper validation.
-

@@ -25,6 +25,22 @@ def main() -> None:
                     sum(float(row["weather_conflict_count"]) for row in subset) / len(subset),
                     4,
                 ),
+                "mean_total_travel_distance_km": round(
+                    sum(float(row["total_travel_distance_km"]) for row in subset) / len(subset),
+                    4,
+                ),
+                "mean_cost_utilization": round(
+                    sum(float(row["estimated_cost_utilization"]) for row in subset) / len(subset),
+                    4,
+                ),
+                "mean_planning_latency_ms": round(
+                    sum(float(row["planning_latency_ms"]) for row in subset) / len(subset),
+                    4,
+                ),
+                "alternative_availability_rate": round(
+                    sum(float(row["alternative_plan_available"]) for row in subset) / len(subset),
+                    4,
+                ),
             }
         )
     with target.open("w", newline="", encoding="utf-8") as handle:
