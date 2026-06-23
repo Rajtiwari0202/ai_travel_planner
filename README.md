@@ -1,152 +1,166 @@
 # TravelAgenticAI
 
-TravelAgenticAI is a local-first agentic travel planning and itinerary optimization platform. It is an itinerary decision-support system, not a booking engine.
+![CI](https://github.com/Rajtiwari0202/ai_travel_planner/actions/workflows/ci.yml/badge.svg)
+![Release](https://img.shields.io/github/v/release/Rajtiwari0202/ai_travel_planner?include_prereleases)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-The default demo uses free/open-source software, curated local datasets, deterministic estimates, SQLite persistence, and a template narrative provider. No paid API or LLM is required.
+TravelAgenticAI is a local-first, explainable multi-agent travel planning and itinerary optimization platform. It coordinates specialized research, weather, geospatial, budgeting, optimization, narrative, validation, and revision stages to produce transparent day-by-day itineraries. It is an itinerary decision-support system, not a booking engine.
 
-## Release Readiness
+## Public Demo
 
-- Local/single-host research demo: about 90-95% complete.
-- Research-paper submission: about 70-80% complete; verified citations, deeper experiments, statistical treatment, and human evaluation remain.
-- Public production SaaS: about 55-65% complete; authentication, HTTPS, backups, hosted secrets, monitoring, abuse protection, and production operations remain.
-- Actual booking platform: not applicable yet; payments and verified flight/hotel inventory are intentionally absent.
+Public deployment is being prepared for the `v1.1.0` public research demo. Public URLs will be added only after the frontend, backend, persistence, SSE, revision, and export flow are verified end to end.
 
-Suggested release title: **TravelAgenticAI v1.0.0 - Local-First Research Release**.
+## Preview
 
-## Current Feature Status
+![System architecture](docs/architecture/diagrams/rendered/15_public_render_neon_deployment.svg)
 
-Implemented:
+## Key Capabilities
 
-- Versioned FastAPI API under `/api/v1`
-- SQLite trip persistence
-- Backend-generated agent events via Server-Sent Events
-- Deterministic destination, transport, accommodation, weather fallback, geospatial, optimization, budget, writer, critic, and revision flow
-- Budget-feasible plan generation or explicit infeasibility result
-- Backend-supplied coordinates for all scheduled activities
-- Vite React TypeScript frontend
-- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, JSON export
-- Backend tests, frontend tests, frontend build, Ruff, mypy, dependency audits, coverage, E2E, and CI configuration
-- OR-Tools CP-SAT optimizer with deterministic heuristic fallback
-- Reproducible benchmark scripts and paper draft
+- Multi-agent planning workflow with streamed Server-Sent Events.
+- OR-Tools CP-SAT itinerary optimization with deterministic fallback.
+- Budget reconciliation across transport, lodging, activities, food, local transport, fees, and contingency.
+- Anonymous session-scoped saved trips for the public demo.
+- SQLite local persistence and PostgreSQL-ready public persistence.
+- Leaflet map, budget chart, revision assistant, JSON export, provider transparency, and research pages.
+- Reproducible synthetic benchmark and ablation pipeline.
 
-Not implemented:
+## Workflow
 
-- Live booking or payment
-- Real-time flight/hotel inventory
-- Verified user-satisfaction study
-- Production authentication
-- Fully modeled booking-grade constraints such as verified opening hours, OSRM route matrices, and arrival/departure windows
+```text
+Trip request
+  -> intent and data validation
+  -> destination, transport, accommodation, weather, geospatial providers
+  -> CP-SAT or deterministic fallback optimization
+  -> budget reconciliation and validation
+  -> grounded itinerary narrative
+  -> persisted plan with replayable SSE events
+```
 
 ## Architecture
 
+Local:
+
 ```text
-frontend/                 Vite React TypeScript client
-backend/app/              Canonical FastAPI backend
-backend/app/agents/       Typed orchestration flow
-backend/app/services/     Providers, weather, geospatial, optimization, narrative
-backend/app/repositories/ SQLite persistence access
-research/                 Benchmarks, figures, and paper draft
-docs/                     Architecture and API notes
+Browser -> Nginx frontend container -> FastAPI backend container -> SQLite volume
 ```
 
-See `docs/architecture/` for diagrams and ADRs.
+Public target:
 
-## Data Honesty
-
-The UI and API distinguish:
-
-- Estimated transport price
-- Estimated accommodation price
-- Public/open-data inspired attraction coordinates
-- Live weather when explicitly enabled
-- Fallback weather guidance when live weather is disabled or unavailable
-- Synthetic fallback destination data
-
-No synthetic or estimated data is presented as live booking availability.
-
-## Quickstart - Windows PowerShell
-
-```powershell
-cd F:\travelAgenticAi
-
-# Backend
-.\venv\Scripts\python.exe -m pip install -r backend\requirements.txt
-cd backend
-..\venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
-
-# Frontend in another terminal
-cd F:\travelAgenticAi\frontend
-npm install
-npm run dev
+```text
+Browser -> Render Static Site -> Render FastAPI Web Service -> Neon PostgreSQL
 ```
 
-Open `http://localhost:5173`.
+More diagrams are available in `docs/architecture/diagrams/`.
 
-## Docker Deploy
+## Tech Stack
+
+- Frontend: React, TypeScript, Vite, Tailwind CSS, React Router, Leaflet, Recharts.
+- Backend: FastAPI, Pydantic, SQLAlchemy, Alembic, OR-Tools.
+- Persistence: SQLite for local development, PostgreSQL for public deployment.
+- Testing: Pytest, Ruff, mypy, Vitest, Playwright.
+- Deployment: Docker Compose locally; Render plus Neon for the public research demo.
+
+## Quick Start With Docker
 
 ```powershell
 cd F:\travelAgenticAi
 docker compose up -d --build
 ```
 
-Open `http://127.0.0.1:18080`. The frontend container serves static assets with Nginx and proxies `/api` to the internal backend container.
+Open the local app:
 
-## Test Commands
+```text
+http://127.0.0.1:18080
+```
+
+Health checks:
+
+```powershell
+curl.exe http://127.0.0.1:18080/healthz
+curl.exe http://127.0.0.1:18080/api/v1/health/ready
+```
+
+## Manual Development
+
+Backend:
 
 ```powershell
 cd F:\travelAgenticAi\backend
-..\venv\Scripts\python.exe -m pip install pip-audit coverage
-..\venv\Scripts\python.exe -m pytest
-..\venv\Scripts\python.exe -m ruff check .
-..\venv\Scripts\python.exe -m mypy app
-..\venv\Scripts\python.exe -m coverage run -m pytest
-..\venv\Scripts\python.exe -m coverage report --fail-under=70
-..\venv\Scripts\python.exe -m pip_audit -r requirements.txt
-
-cd F:\travelAgenticAi\frontend
-npm audit
-npm run lint
-npm run typecheck
-npm test
-npm run build
-npm run e2e
+..\venv\Scripts\python.exe -m pip install -r requirements.txt
+..\venv\Scripts\python.exe -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-## Research
+Frontend:
+
+```powershell
+cd F:\travelAgenticAi\frontend
+npm ci
+$env:VITE_API_BASE_URL = "http://127.0.0.1:8000/api/v1"
+npm run dev
+```
+
+## Public Deployment Summary
+
+The repository includes `render.yaml` for:
+
+- Render FastAPI web service
+- Render static frontend
+- Neon PostgreSQL via `DATABASE_URL`
+- Render health checks
+- build-time frontend API configuration
+
+See `docs/deployment/RENDER_DEPLOYMENT.md`, `docs/deployment/NEON_SETUP.md`, and `docs/deployment/PUBLIC_ENVIRONMENT_VARIABLES.md`.
+
+## Research Contribution
+
+The research draft evaluates a multi-agent itinerary optimizer over synthetic benchmark cases with deterministic baselines and ablations. The current paper is a draft, not peer reviewed, and does not include fabricated citations or user-study data.
+
+## Reproducibility
 
 ```powershell
 cd F:\travelAgenticAi
-.\venv\Scripts\python.exe research\experiments\run_benchmarks.py
-.\venv\Scripts\python.exe research\experiments\run_ablations.py
 .\venv\Scripts\python.exe research\experiments\run_all.py
 ```
 
-Outputs are written to `research/results/` and `research/figures/`.
+Outputs:
 
-## API
+- `research/results/benchmark_results.csv`
+- `research/results/ablation_summary.csv`
+- `research/figures/benchmark_scores.png`
 
-Core endpoints:
+## Data Transparency
 
-- `GET /api/v1/health`
-- `POST /api/v1/trips`
-- `GET /api/v1/trips`
-- `GET /api/v1/trips/{trip_id}`
-- `POST /api/v1/trips/{trip_id}/revise`
-- `GET /api/v1/trips/{trip_id}/events`
-- `DELETE /api/v1/trips/{trip_id}`
-- `GET /api/v1/providers/status`
-- `GET /api/v1/destinations/search`
+Transport and accommodation prices are estimates unless explicitly labeled otherwise. The app does not provide live flight inventory, live hotel availability, payment, ticketing, or booking confirmation.
 
-OpenAPI docs are available at `http://localhost:8000/docs`.
+## Limitations
 
-For Docker Compose deployment, API routes are proxied under the same host, for example `http://127.0.0.1:18080/api/v1/health`.
+- No payments or commercial booking flow.
+- No verified live flight or hotel inventory.
+- No full user accounts; the public demo uses anonymous session-scoped access.
+- Research paper still needs verified citations, deeper experiments, and human evaluation.
+- Public production SaaS maturity still requires long-term monitoring, backups, abuse operations, and incident processes.
 
-## Intended GitHub Repository
+## Documentation
 
-User-designated repo: `https://github.com/Rajtiwari0202/ai_travel_planner`
+Start with `docs/README.md`.
 
-The local Git remote was not changed automatically because `AGENTS.md` explicitly says not to change Git remotes.
+Important sections:
+
+- `docs/architecture/`
+- `docs/agents/`
+- `docs/api/`
+- `docs/database/`
+- `docs/deployment/`
+- `docs/operations/`
+- `docs/research/`
+- `docs/security/`
+- `docs/testing/`
+- `docs/presentation/`
 
 ## License
 
 MIT. See `LICENSE`.
+
+## Maintainer
+
+Repository: `https://github.com/Rajtiwari0202/ai_travel_planner`
