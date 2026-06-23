@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-06-22
+Last updated: 2026-06-23
 
 ## Summary
 
@@ -28,7 +28,7 @@ This is not a hosted production booking product. Authentication, live booking in
 - Vite React TypeScript frontend with planner, event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, and JSON export.
 - Route-level frontend lazy loading.
 - Research benchmark dataset, benchmark runner, ablation runner, generated CSVs, generated PNG figure, and conservative paper draft.
-- Dockerfiles with non-root runtime users, `docker-compose.yml`, `.env.example`, expanded CI workflow, and project docs.
+- Dockerfiles with non-root runtime users, `.dockerignore`, `docker-compose.yml`, `.env.example`, expanded CI workflow, and project docs.
 
 ## Current Verification Results
 
@@ -47,16 +47,14 @@ Passed:
 - E2E: `npm run e2e` -> 1 Chromium test passed
 - Research: `research/experiments/run_all.py` -> benchmark CSV, ablation CSV, and PNG regenerated
 - Secret scan: high-confidence private key/token/password patterns -> no matches
-
-Blocked locally:
-
-- Docker image builds could not be run because Docker Desktop's Linux engine was not running. The CI workflow is configured to build both images.
+- Docker: backend and frontend image builds passed locally
+- Fresh clone: backend, frontend, research, and E2E gates passed from `F:\travelAgenticAi-fresh-verify-20260622-195819`
 
 Warnings and notes:
 
 - Frontend build still warns that the lazy-loaded planner chunk is larger than 500 kB because map/chart libraries live in that route.
 - Backend tests show a Starlette `TestClient` deprecation warning for the current FastAPI/Starlette test client stack.
-- Fresh-clone verification is still pending.
+- Fresh-clone verification is recorded in `docs/FRESH_CLONE_VERIFICATION.md`.
 - Current audit files: `docs/GAP_AUDIT.md`, `docs/ACCEPTANCE_MATRIX.md`, and `docs/VERIFICATION_REPORT.md`.
 
 ## Research Outputs

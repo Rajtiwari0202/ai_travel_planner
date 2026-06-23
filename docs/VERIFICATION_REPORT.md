@@ -1,6 +1,6 @@
 # Verification Report
 
-Last updated: 2026-06-22
+Last updated: 2026-06-23
 
 ## Environment
 
@@ -31,13 +31,14 @@ The first continuation audit found a partially implemented app with passing back
 | `npm run e2e` in `frontend` | passed | 1 Playwright Chromium trip-planning smoke test passed against managed local backend/frontend servers. |
 | `.\venv\Scripts\python.exe research\experiments\run_all.py` | passed | Regenerated benchmark CSV, ablation CSV, and benchmark PNG. |
 | High-confidence secret scan | passed | No matches for private-key, bearer-token, OpenAI-key, GitHub-token, Slack-token, or populated env-secret patterns. |
-| `docker build -f backend/Dockerfile ...` | blocked locally | Docker CLI exists, but Docker Desktop Linux engine is not running: `dockerDesktopLinuxEngine` pipe missing. |
-| `docker build -f frontend/Dockerfile ...` | blocked locally | Same local Docker daemon blocker. CI is configured to build both images. |
+| `docker build -f backend/Dockerfile -t travelagenticai-backend:test .` | passed | Passed after adding `.dockerignore`; Dockerfile runs as non-root `app`. |
+| `docker build -f frontend/Dockerfile -t travelagenticai-frontend:test .` | passed | Passed after adding `.dockerignore`; Dockerfile runs as non-root `node`. |
+| Fresh clone verification | passed | See `docs/FRESH_CLONE_VERIFICATION.md`; backend, frontend, research, and E2E gates passed from a separate clone. |
 
 ## Current Gate Status
 
 - Functional gate: partial. The local planner works end to end, but live booking, payments, account auth, and real inventory remain out of scope.
-- Engineering gate: mostly complete for this local demo. CI now includes secret scan, backend audit, coverage, lint, mypy, pytest, frontend audit, lint, typecheck, test, build, E2E, research, and Docker build jobs.
+- Engineering gate: mostly complete for this local demo. CI now includes secret scan, backend audit, coverage, lint, mypy, pytest, frontend audit, lint, typecheck, test, build, E2E, research, and Docker build jobs. Local Docker builds and fresh-clone verification pass.
 - Research gate: partial. Benchmarks and ablations are reproducible; scholarly related-work citations and user studies are intentionally not claimed.
 - UX gate: partial. Planner, saved trips, providers, research, methodology, map, budget, revision, and export views exist; accessibility automation and broader E2E coverage remain thin.
 

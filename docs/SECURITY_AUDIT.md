@@ -1,6 +1,6 @@
 # Security Audit
 
-Last updated: 2026-06-22
+Last updated: 2026-06-23
 
 ## Dependency Audits
 
@@ -28,6 +28,7 @@ The same scan is configured in `.github/workflows/ci.yml`.
 
 - Backend Docker image creates and runs as an unprivileged `app` user.
 - Frontend Docker image runs as the bundled unprivileged `node` user.
+- `.dockerignore` keeps local virtualenvs, dependency folders, test output, databases, logs, and env files out of Docker build contexts.
 - `.env` files remain ignored; examples contain placeholders only.
 - Optional live/weather/model providers are disabled or local by default.
 

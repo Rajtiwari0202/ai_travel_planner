@@ -1,6 +1,6 @@
 # Gap Audit
 
-Last updated: 2026-06-22
+Last updated: 2026-06-23
 
 Branch: `codex/research-production-completion`
 
@@ -24,7 +24,8 @@ Branch: `codex/research-production-completion`
 - Added route-level lazy loading.
 - Cleared backend and frontend dependency audits.
 - Added CI jobs for secret scan, backend audit/coverage/lint/mypy/tests, frontend audit/lint/typecheck/test/build, E2E, research, and Docker builds.
-- Updated Dockerfiles to run as non-root users.
+- Updated Dockerfiles to run as non-root users and added `.dockerignore` for practical build contexts.
+- Completed fresh-clone verification.
 
 ## Remaining Gaps
 
@@ -78,12 +79,12 @@ Research scripts run on a 12-case, 10-destination synthetic benchmark with five 
 
 ### Fresh Clone
 
-Status: missing.
+Status: complete for local demo gates.
 
-Fresh-clone verification has not been run for this branch.
+Fresh-clone verification passed for backend, frontend, research, and E2E commands. See `docs/FRESH_CLONE_VERIFICATION.md`.
 
 ### Docker
 
-Status: configured, locally blocked.
+Status: complete for local image builds.
 
-Dockerfiles and CI Docker build jobs are present. Local image builds were blocked because Docker Desktop's Linux engine was not running.
+Dockerfiles and CI Docker build jobs are present. Backend and frontend images build locally after adding `.dockerignore`.
