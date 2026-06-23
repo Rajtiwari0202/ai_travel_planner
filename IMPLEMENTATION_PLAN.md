@@ -3,10 +3,10 @@
 ## Baseline Audit
 
 - Existing repository path: `F:\travelAgenticAi`
-- Current Git branch: `main`
-- Current remote: `https://github.com/Rajtiwari0202/Task-Pilot`
+- Original baseline branch: `main`
+- Continuation branch: `codex/research-production-completion`
+- Current remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
 - Intended repository from user: `https://github.com/Rajtiwari0202/ai_travel_planner`
-- Remote was not changed automatically because `AGENTS.md` explicitly says not to change Git remotes.
 
 ## Existing Failures Found
 
@@ -16,6 +16,8 @@
 - Backend dependencies in `backend/requirements.txt` are newer than the installed virtual environment.
 
 ## Phases
+
+Continuation note: the original canonical backend/frontend phases are now implemented. The current branch is focused on closing the stricter completion gates from `docs/ACCEPTANCE_MATRIX.md`.
 
 ### Phase 1 - Canonical Backend
 
@@ -40,6 +42,7 @@ Acceptance criteria:
 - Benchmark script runs deterministically.
 - Results CSV and generated figure are produced from actual local planner runs.
 - Paper draft describes implemented methods and avoids fabricated citations or results.
+- OR-Tools CP-SAT optimizer and deterministic baseline modes run against the same benchmark dataset.
 
 ### Phase 4 - Quality, Docs, CI
 
@@ -49,9 +52,19 @@ Acceptance criteria:
 - Production build passes.
 - Documentation accurately states implemented and remaining items.
 - Docker and GitHub Actions scaffolding are present.
+- Dependency audits, secret scan, coverage, E2E, research smoke, and Docker builds are configured in CI.
+
+### Phase 5 - Fresh Clone Verification
+
+Acceptance criteria:
+- Clone the branch into a clean folder.
+- Install backend and frontend dependencies from committed files.
+- Run backend, frontend, research, and E2E gates from documented commands.
+- Record results in `docs/FRESH_CLONE_VERIFICATION.md`.
 
 ## Out of Scope for This Local Completion Pass
 
 - Paid booking, payment, or live availability.
 - Guaranteed live weather when `ENABLE_LIVE_WEATHER=false`.
-- Automatic GitHub push.
+- Force-pushing `main`.
+- Claiming production readiness before all completion gates pass.

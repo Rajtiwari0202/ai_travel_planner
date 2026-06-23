@@ -4,6 +4,15 @@ TravelAgenticAI is a local-first agentic travel planning and itinerary optimizat
 
 The default demo uses free/open-source software, curated local datasets, deterministic estimates, SQLite persistence, and a template narrative provider. No paid API or LLM is required.
 
+## Release Readiness
+
+- Local/single-host research demo: about 90-95% complete.
+- Research-paper submission: about 70-80% complete; verified citations, deeper experiments, statistical treatment, and human evaluation remain.
+- Public production SaaS: about 55-65% complete; authentication, HTTPS, backups, hosted secrets, monitoring, abuse protection, and production operations remain.
+- Actual booking platform: not applicable yet; payments and verified flight/hotel inventory are intentionally absent.
+
+Suggested release title: **TravelAgenticAI v1.0.0 - Local-First Research Release**.
+
 ## Current Feature Status
 
 Implemented:
@@ -15,8 +24,9 @@ Implemented:
 - Budget-feasible plan generation or explicit infeasibility result
 - Backend-supplied coordinates for all scheduled activities
 - Vite React TypeScript frontend
-- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, methodology page, JSON export
-- Backend tests, frontend tests, frontend build, Ruff, and mypy configuration
+- Planner form, real event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, JSON export
+- Backend tests, frontend tests, frontend build, Ruff, mypy, dependency audits, coverage, E2E, and CI configuration
+- OR-Tools CP-SAT optimizer with deterministic heuristic fallback
 - Reproducible benchmark scripts and paper draft
 
 Not implemented:
@@ -25,7 +35,7 @@ Not implemented:
 - Real-time flight/hotel inventory
 - Verified user-satisfaction study
 - Production authentication
-- OR-Tools CP-SAT optimizer; current optimizer is a deterministic heuristic with hard budget pruning
+- Fully modeled booking-grade constraints such as verified opening hours, OSRM route matrices, and arrival/departure windows
 
 ## Architecture
 
@@ -72,18 +82,34 @@ npm run dev
 
 Open `http://localhost:5173`.
 
+## Docker Deploy
+
+```powershell
+cd F:\travelAgenticAi
+docker compose up -d --build
+```
+
+Open `http://127.0.0.1:18080`. The frontend container serves static assets with Nginx and proxies `/api` to the internal backend container.
+
 ## Test Commands
 
 ```powershell
 cd F:\travelAgenticAi\backend
+..\venv\Scripts\python.exe -m pip install pip-audit coverage
 ..\venv\Scripts\python.exe -m pytest
-..\venv\Scripts\python.exe -m ruff check app tests
+..\venv\Scripts\python.exe -m ruff check .
 ..\venv\Scripts\python.exe -m mypy app
+..\venv\Scripts\python.exe -m coverage run -m pytest
+..\venv\Scripts\python.exe -m coverage report --fail-under=70
+..\venv\Scripts\python.exe -m pip_audit -r requirements.txt
 
 cd F:\travelAgenticAi\frontend
+npm audit
+npm run lint
 npm run typecheck
 npm test
 npm run build
+npm run e2e
 ```
 
 ## Research
@@ -92,6 +118,7 @@ npm run build
 cd F:\travelAgenticAi
 .\venv\Scripts\python.exe research\experiments\run_benchmarks.py
 .\venv\Scripts\python.exe research\experiments\run_ablations.py
+.\venv\Scripts\python.exe research\experiments\run_all.py
 ```
 
 Outputs are written to `research/results/` and `research/figures/`.
@@ -111,6 +138,8 @@ Core endpoints:
 - `GET /api/v1/destinations/search`
 
 OpenAPI docs are available at `http://localhost:8000/docs`.
+
+For Docker Compose deployment, API routes are proxied under the same host, for example `http://127.0.0.1:18080/api/v1/health`.
 
 ## Intended GitHub Repository
 

@@ -246,7 +246,11 @@ class TripOrchestrator:
                 }
             )
             changes.append("Prioritized indoor-friendly activities.")
-        budget_numbers = [int(token.replace(",", "")) for token in instruction.replace("₹", " ").split() if token.replace(",", "").isdigit()]
+        budget_numbers = [
+            int(token.replace(",", ""))
+            for token in instruction.replace(chr(0x20B9), " ").split()
+            if token.replace(",", "").isdigit()
+        ]
         if budget_numbers:
             request = request.model_copy(update={"total_budget": float(budget_numbers[0])})
             changes.append(f"Updated max budget to {request.currency} {budget_numbers[0]:,}.")
@@ -268,9 +272,33 @@ class TripOrchestrator:
         weather = await get_weather_forecasts(self.settings, destination.center, trip_dates(request))
         plan = build_plan(trip_id, request, destination, transports, accommodations, activities, weather)
         if previous:
+            previous_version_id = (
+                previous.revision_history[-1].new_version_id if previous.revision_history else f"{trip_id}:initial"
+            )
+            previous_day_activity_ids = {
+                day.date: [activity.activity_id for activity in day.activities]
+                for day in previous.days
+            }
+            affected_days = [
+                day.date
+                for day in plan.days
+                if previous_day_activity_ids.get(day.date) != [activity.activity_id for activity in day.activities]
+            ]
+            previous_warnings = set(previous.validation.warnings)
             plan.revision_history = [
                 *previous.revision_history,
-                RevisionRecord(instruction=revision.instruction, changes=changes),
+                RevisionRecord(
+                    instruction=revision.instruction,
+                    changes=changes,
+                    previous_version_id=previous_version_id,
+                    requested_change=revision.instruction,
+                    actual_changes=changes,
+                    cost_difference=round(plan.budget.total - previous.budget.total, 2),
+                    score_difference=round(plan.score.total_score - previous.score.total_score, 3),
+                    affected_days=affected_days,
+                    new_warnings=[warning for warning in plan.validation.warnings if warning not in previous_warnings],
+                    unchanged_constraints=plan.optimizer.binding_constraints,
+                ),
             ]
         plan.narrative_summary = await self.narrative_provider.generate_text(plan)
 

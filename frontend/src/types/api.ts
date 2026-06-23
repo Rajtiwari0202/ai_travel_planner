@@ -45,7 +45,13 @@ export interface ProviderMetadata {
   data_kind: DataKind;
   fetched_at: string;
   confidence: number;
+  provider_name?: string | null;
+  source_url?: string | null;
+  source_identifier?: string | null;
   notes?: string | null;
+  warnings: string[];
+  error?: string | null;
+  currency?: string | null;
 }
 
 export interface DestinationOverview {
@@ -148,6 +154,18 @@ export interface ScoreBreakdown {
   explanation: string[];
 }
 
+export interface OptimizerMetadata {
+  method: string;
+  engine: string;
+  objective_score: number;
+  normalized_score_breakdown: Record<string, number>;
+  binding_constraints: string[];
+  rejected_candidates: string[];
+  assumptions: string[];
+  feasibility_status: "feasible" | "infeasible" | "fallback_feasible" | "unknown";
+  alternatives_considered: number;
+}
+
 export interface ValidationReport {
   status: "passed" | "warning" | "failed";
   errors: string[];
@@ -160,6 +178,15 @@ export interface RevisionRecord {
   requested_at: string;
   instruction: string;
   changes: string[];
+  previous_version_id?: string | null;
+  new_version_id: string;
+  requested_change?: string | null;
+  actual_changes: string[];
+  cost_difference: number;
+  score_difference: number;
+  affected_days: string[];
+  new_warnings: string[];
+  unchanged_constraints: string[];
 }
 
 export interface AlternativePlan {
@@ -180,6 +207,7 @@ export interface TripPlan {
   days: TripDay[];
   budget: BudgetBreakdown;
   score: ScoreBreakdown;
+  optimizer: OptimizerMetadata;
   alternatives: AlternativePlan[];
   validation: ValidationReport;
   assumptions: string[];

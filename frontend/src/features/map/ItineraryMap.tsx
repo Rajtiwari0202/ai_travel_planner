@@ -1,5 +1,6 @@
 import { MapContainer, Marker, Polyline, Popup, TileLayer, useMap } from "react-leaflet";
 import L, { LatLngBoundsExpression } from "leaflet";
+import { useEffect } from "react";
 import type { GeoPoint, TripPlan } from "../../types/api";
 
 delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: unknown })._getIconUrl;
@@ -14,12 +15,16 @@ export function ItineraryMap({ plan }: { plan: TripPlan }) {
   const points = [plan.accommodation.location, ...activityPoints];
   const center = plan.destination.center;
   const path = points.map(toLatLng);
+  const activityCount = activityPoints.length;
 
   return (
     <section className="rounded-lg border border-ink/10 bg-white p-4 shadow-soft" aria-label="Itinerary map">
       <div className="mb-3">
         <h2 className="font-semibold text-ink">Map and activity route</h2>
-        <p className="text-sm text-ink/65">All coordinates come from the backend response. The browser does not geocode.</p>
+        <p className="text-sm text-ink/65">
+          All coordinates come from the backend response. The browser does not geocode. This map contains one hotel marker
+          and {activityCount} activity marker(s).
+        </p>
       </div>
       <div className="h-[420px] overflow-hidden rounded-lg border border-ink/10">
         <MapContainer center={[center.latitude, center.longitude]} zoom={12} scrollWheelZoom={false}>
@@ -43,7 +48,7 @@ export function ItineraryMap({ plan }: { plan: TripPlan }) {
                     Day {plan.days.indexOf(day) + 1}.{index + 1} {activity.title}
                   </strong>
                   <br />
-                  {activity.category} · {activity.data_kind.replace("_", " ")}
+                  {activity.category} / {activity.data_kind.replace("_", " ")}
                 </Popup>
               </Marker>
             )),
@@ -57,10 +62,16 @@ export function ItineraryMap({ plan }: { plan: TripPlan }) {
 
 function FitBounds({ points }: { points: GeoPoint[] }) {
   const map = useMap();
-  if (points.length > 1) {
-    const bounds = points.map(toLatLng) as LatLngBoundsExpression;
-    window.setTimeout(() => map.fitBounds(bounds, { padding: [28, 28] }), 0);
-  }
+  useEffect(() => {
+    if (points.length === 1) {
+      map.setView(toLatLng(points[0]), 13);
+      return;
+    }
+    if (points.length > 1) {
+      const bounds = points.map(toLatLng) as LatLngBoundsExpression;
+      map.fitBounds(bounds, { padding: [28, 28] });
+    }
+  }, [map, points]);
   return null;
 }
 

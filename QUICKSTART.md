@@ -20,6 +20,21 @@ npm run dev
 
 Open `http://localhost:5173`.
 
+## Docker Compose Demo Deploy
+
+```powershell
+cd F:\travelAgenticAi
+docker compose up -d --build
+```
+
+Open `http://127.0.0.1:18080`.
+
+Stop it with:
+
+```powershell
+docker compose down
+```
+
 ## Linux/macOS
 
 ```bash

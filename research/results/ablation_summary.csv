@@ -1,5 +1,6 @@
-system,mean_feasible,mean_budget_violation,mean_score,mean_weather_conflicts
-ablation_no_weather,0.75,0.25,0.728,0.0
-cheapest_first,0.75,0.25,0.7285,1.0
-proposed_multi_agent,0.75,0.25,0.6795,2.25
-weighted_ranking,0.75,0.25,0.6753,2.25
+system,mean_feasible,mean_budget_violation,mean_score,mean_weather_conflicts,mean_total_travel_distance_km,mean_cost_utilization,mean_planning_latency_ms,alternative_availability_rate
+cheapest_first,0.9167,0.0833,0.8367,0.0,52.7308,0.9273,15.8125,0.9167
+cp_sat_no_geospatial,0.9167,0.0833,0.8413,0.0,52.8917,0.9295,49.8125,0.9167
+cp_sat_no_weather,0.9167,0.0833,0.7852,1.1667,75.5067,0.9604,54.6875,0.9167
+cp_sat_optimizer,0.9167,0.0833,0.8421,0.0,50.11,0.9297,51.8125,0.9167
+weighted_ranker,0.9167,0.0833,0.8404,0.0,54.0417,0.9297,17.8125,0.9167

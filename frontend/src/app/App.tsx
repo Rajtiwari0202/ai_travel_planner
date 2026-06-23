@@ -1,8 +1,22 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Link, NavLink, Route, Routes } from "react-router-dom";
-import { Compass, FlaskConical, History, MapPinned, ShieldCheck } from "lucide-react";
-import { PlannerWorkspace } from "../features/planner/PlannerWorkspace";
-import { MethodologyPage } from "../features/static/MethodologyPage";
-import { SavedTripsPage } from "../features/trips/SavedTripsPage";
+import { BarChart3, Compass, DatabaseZap, FlaskConical, History, MapPinned, ShieldCheck } from "lucide-react";
+
+const PlannerWorkspace = lazy(() =>
+  import("../features/planner/PlannerWorkspace").then((module) => ({ default: module.PlannerWorkspace })),
+);
+const SavedTripsPage = lazy(() =>
+  import("../features/trips/SavedTripsPage").then((module) => ({ default: module.SavedTripsPage })),
+);
+const MethodologyPage = lazy(() =>
+  import("../features/static/MethodologyPage").then((module) => ({ default: module.MethodologyPage })),
+);
+const ProviderStatusPage = lazy(() =>
+  import("../features/providers/ProviderStatusPage").then((module) => ({ default: module.ProviderStatusPage })),
+);
+const ResearchPage = lazy(() =>
+  import("../features/research/ResearchPage").then((module) => ({ default: module.ResearchPage })),
+);
 
 function Shell() {
   return (
@@ -19,6 +33,8 @@ function Shell() {
             {[
               ["/", "Planner", MapPinned],
               ["/trips", "Saved", History],
+              ["/providers", "Providers", DatabaseZap],
+              ["/research", "Research", BarChart3],
               ["/methodology", "Method", FlaskConical],
             ].map(([to, label, Icon]) => (
               <NavLink
@@ -37,13 +53,25 @@ function Shell() {
           </nav>
         </div>
       </header>
-      <Routes>
-        <Route path="/" element={<PlannerWorkspace />} />
-        <Route path="/trips" element={<SavedTripsPage />} />
-        <Route path="/methodology" element={<MethodologyPage />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<PlannerWorkspace />} />
+          <Route path="/trips" element={<SavedTripsPage />} />
+          <Route path="/providers" element={<ProviderStatusPage />} />
+          <Route path="/research" element={<ResearchPage />} />
+          <Route path="/methodology" element={<MethodologyPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
     </div>
+  );
+}
+
+function RouteFallback() {
+  return (
+    <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6" aria-live="polite">
+      <div className="h-2 w-40 rounded-full bg-ink/10" />
+    </main>
   );
 }
 
