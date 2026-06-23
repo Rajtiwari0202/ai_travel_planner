@@ -16,6 +16,7 @@ services:
       RATE_LIMIT_REQUESTS: "90"
       RATE_LIMIT_WINDOW_SECONDS: "60"
       ANONYMOUS_TRIP_TTL_DAYS: "7"
+      MAX_REQUEST_BYTES: "1048576"
     expose:
       - "8000"
     volumes:

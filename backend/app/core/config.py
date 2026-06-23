@@ -37,6 +37,7 @@ class Settings:
     rate_limit_requests: int = int(os.getenv("RATE_LIMIT_REQUESTS", os.getenv("RATE_LIMIT_PER_MINUTE", "90")))
     rate_limit_window_seconds: int = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
     anonymous_trip_ttl_days: int = int(os.getenv("ANONYMOUS_TRIP_TTL_DAYS", "7"))
+    max_request_bytes: int = int(os.getenv("MAX_REQUEST_BYTES", "1048576"))
 
     @property
     def is_production(self) -> bool:

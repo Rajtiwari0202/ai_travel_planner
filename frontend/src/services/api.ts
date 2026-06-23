@@ -72,6 +72,28 @@ export function createTrip(payload: TripRequest): Promise<TripCreateResponse> {
   );
 }
 
+export async function waitForReadiness(
+  onAttempt?: (attempt: number, elapsedMs: number) => void,
+  maxAttempts = 6,
+): Promise<void> {
+  const started = Date.now();
+  let delay = 1000;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    onAttempt?.(attempt, Date.now() - started);
+    try {
+      const response = await fetch(`${API_BASE}/health/ready`, { headers: authHeaders() });
+      if (response.ok) {
+        return;
+      }
+    } catch {
+      // The public demo backend may be waking up; retry below.
+    }
+    await new Promise((resolve) => window.setTimeout(resolve, delay));
+    delay = Math.min(delay * 1.8, 8000);
+  }
+  throw new Error("The planning service did not become ready in time. Please try again shortly.");
+}
+
 export function getTrip(tripId: string): Promise<TripRecordResponse> {
   return requestJson<TripRecordResponse>(`/trips/${tripId}`, undefined, tripRecordSchema);
 }
