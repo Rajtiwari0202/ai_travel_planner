@@ -27,8 +27,10 @@ The same scan is configured in `.github/workflows/ci.yml`.
 ## Runtime Hardening
 
 - Backend Docker image creates and runs as an unprivileged `app` user.
-- Frontend Docker image runs as the bundled unprivileged `node` user.
+- Frontend Docker image serves static assets with the unprivileged `nginx` user from `nginxinc/nginx-unprivileged`.
 - `.dockerignore` keeps local virtualenvs, dependency folders, test output, databases, logs, and env files out of Docker build contexts.
+- Docker Compose exposes only the Nginx frontend by default; the backend stays on the internal Compose network.
+- Nginx sets baseline security headers and limits request bodies to 1 MB.
 - `.env` files remain ignored; examples contain placeholders only.
 - Optional live/weather/model providers are disabled or local by default.
 
@@ -38,4 +40,4 @@ The same scan is configured in `.github/workflows/ci.yml`.
 - Add request body size limits and stronger rate limiting for public exposure.
 - Lock down production CORS to exact deployment origins.
 - Add hosted secrets management and database backup/retention policy.
-- Run Docker image vulnerability scanning in a live CI environment after Docker builds are available.
+- Run Docker image vulnerability scanning in the deployment registry or CI platform.

@@ -30,6 +30,7 @@ Last updated: 2026-06-23
 | Backend Ruff gate | complete | `backend/pyproject.toml` | n/a | `ruff check .` | Whole-backend Ruff passes. |
 | Dependency audits | complete | `backend/requirements.txt`, `frontend/package-lock.json` | n/a | `pip_audit`, `npm audit` | Both backend and frontend dependency audits report no known vulnerabilities. |
 | Docker non-root users | complete | `backend/Dockerfile`, `frontend/Dockerfile`, `.dockerignore` | CI Docker job | `docker build` locally and in CI | Dockerfiles run as unprivileged users; backend and frontend image builds pass locally. |
+| Docker Compose deployment | complete | `docker-compose.yml`, `frontend/nginx.conf`, `docs/deployment/README.md` | deploy smoke | `docker compose up -d --build`, `curl /healthz`, `curl /api/v1/health` | Frontend serves on host port `18080`, proxies `/api` to internal backend, and trip creation completes through proxy. |
 | E2E coverage | partial | `frontend/e2e/planner.spec.ts` | Playwright | `npm run e2e` | One happy-path scenario only. |
 | Research dataset breadth | complete | `research/datasets/benchmark_cases.json` | research scripts | `run_all.py` | 12 synthetic benchmark cases cover 10 Indian destinations and varied constraints. |
 | Paper citations | partial | `research/paper/paper.tex`, `research/paper/CITATION_VERIFICATION.md` | n/a | n/a | No fabricated citations are used; related work remains blocked on human literature verification. |

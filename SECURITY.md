@@ -1,6 +1,6 @@
 # Security
 
-Last reviewed: 2026-06-22
+Last reviewed: 2026-06-23
 
 ## Supported Model
 
@@ -27,5 +27,6 @@ Live weather is disabled by default. When enabled, provider calls use timeouts a
 - Frontend `npm audit` reports 0 vulnerabilities.
 - CI includes a high-confidence secret scan.
 - Backend and frontend Dockerfiles run as non-root users.
+- Docker Compose exposes only the Nginx frontend by default and keeps the backend on the internal Compose network.
 
 See `docs/SECURITY_AUDIT.md` for the latest audit notes and remaining production security work.

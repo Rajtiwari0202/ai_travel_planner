@@ -4,7 +4,7 @@ Last updated: 2026-06-23
 
 ## Summary
 
-TravelAgenticAI is now a hardened local-first, full-stack, explainable agentic travel-planning demo. It works without paid APIs or an LLM, persists trips locally, streams backend agent events, includes CP-SAT optimization with deterministic fallbacks, and ships reproducible research artifacts.
+TravelAgenticAI is now a hardened local-first, full-stack, explainable agentic travel-planning demo with a verified Docker Compose deployment path. It works without paid APIs or an LLM, persists trips locally, streams backend agent events, includes CP-SAT optimization with deterministic fallbacks, and ships reproducible research artifacts.
 
 This is not a hosted production booking product. Authentication, live booking inventory, payments, production data contracts, and verified user studies remain outside the current local completion pass.
 
@@ -28,7 +28,7 @@ This is not a hosted production booking product. Authentication, live booking in
 - Vite React TypeScript frontend with planner, event timeline, itinerary results, budget chart, Leaflet map, revision assistant, saved trips page, provider status page, research page, methodology page, and JSON export.
 - Route-level frontend lazy loading.
 - Research benchmark dataset, benchmark runner, ablation runner, generated CSVs, generated PNG figure, and conservative paper draft.
-- Dockerfiles with non-root runtime users, `.dockerignore`, `docker-compose.yml`, `.env.example`, expanded CI workflow, and project docs.
+- Production-style Docker Compose path with Nginx static frontend, same-origin `/api` proxy, internal backend service, healthchecks, non-root containers, `.dockerignore`, `.env.example`, expanded CI workflow, and project docs.
 
 ## Current Verification Results
 
@@ -48,6 +48,7 @@ Passed:
 - Research: `research/experiments/run_all.py` -> benchmark CSV, ablation CSV, and PNG regenerated
 - Secret scan: high-confidence private key/token/password patterns -> no matches
 - Docker: backend and frontend image builds passed locally
+- Docker Compose deploy: `docker compose -p travelagenticai-deploy up -d --build` passed; `http://127.0.0.1:18080/healthz` and `/api/v1/health` passed; proxied trip creation completed.
 - Fresh clone: backend, frontend, research, and E2E gates passed from `F:\travelAgenticAi-fresh-verify-20260622-195819`
 
 Warnings and notes:
@@ -67,7 +68,7 @@ Warnings and notes:
 ## Remaining Limitations
 
 - No live booking, payment, or real-time flight/hotel availability.
-- No production auth, user accounts, hosted secrets management, or cloud deployment hardening.
+- No production auth, user accounts, or hosted secrets management.
 - Optimizer does not yet model every production constraint such as verified opening hours, OSRM route matrices, or arrival/departure windows.
 - Live weather is optional and disabled by default.
 - E2E and accessibility coverage are still thin.

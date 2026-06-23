@@ -26,6 +26,7 @@ Branch: `codex/research-production-completion`
 - Added CI jobs for secret scan, backend audit/coverage/lint/mypy/tests, frontend audit/lint/typecheck/test/build, E2E, research, and Docker builds.
 - Updated Dockerfiles to run as non-root users and added `.dockerignore` for practical build contexts.
 - Completed fresh-clone verification.
+- Added production-style Docker Compose deploy path with Nginx static frontend, `/api` proxy, healthchecks, internal backend, and verified trip-creation smoke.
 
 ## Remaining Gaps
 
@@ -88,3 +89,9 @@ Fresh-clone verification passed for backend, frontend, research, and E2E command
 Status: complete for local image builds.
 
 Dockerfiles and CI Docker build jobs are present. Backend and frontend images build locally after adding `.dockerignore`.
+
+### Hosted Production
+
+Status: partial.
+
+The repository is ready for local or single-host demo deployment. Public hosted production still needs HTTPS termination, authentication, backup policy, hosted secret management, stricter rate limiting, and image vulnerability scanning.

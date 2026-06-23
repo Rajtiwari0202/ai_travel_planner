@@ -73,6 +73,15 @@ npm run dev
 
 Open `http://localhost:5173`.
 
+## Docker Deploy
+
+```powershell
+cd F:\travelAgenticAi
+docker compose up -d --build
+```
+
+Open `http://127.0.0.1:18080`. The frontend container serves static assets with Nginx and proxies `/api` to the internal backend container.
+
 ## Test Commands
 
 ```powershell
@@ -120,6 +129,8 @@ Core endpoints:
 - `GET /api/v1/destinations/search`
 
 OpenAPI docs are available at `http://localhost:8000/docs`.
+
+For Docker Compose deployment, API routes are proxied under the same host, for example `http://127.0.0.1:18080/api/v1/health`.
 
 ## Intended GitHub Repository
 

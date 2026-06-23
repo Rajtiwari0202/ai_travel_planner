@@ -4,24 +4,46 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     environment:
+      APP_ENV: production
       DATABASE_URL: sqlite:////data/travelagenticai.sqlite3
-      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+      CORS_ORIGINS: http://localhost:${FRONTEND_PORT:-18080},http://127.0.0.1:${FRONTEND_PORT:-18080}
       ENABLE_LIVE_WEATHER: "false"
-    ports:
-      - "8000:8000"
+      PROVIDER_TIMEOUT_SECONDS: "4"
+      RATE_LIMIT_PER_MINUTE: "90"
+    expose:
+      - "8000"
     volumes:
       - travelagenticai-data:/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=3).read()",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
   frontend:
     build:
       context: .
       dockerfile: frontend/Dockerfile
-    environment:
-      VITE_API_BASE_URL: http://localhost:8000/api/v1
+      args:
+        VITE_API_BASE_URL: /api/v1
     ports:
-      - "5173:5173"
+      - "${FRONTEND_PORT:-18080}:8080"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
 volumes:
   travelagenticai-data:

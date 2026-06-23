@@ -34,11 +34,15 @@ The first continuation audit found a partially implemented app with passing back
 | `docker build -f backend/Dockerfile -t travelagenticai-backend:test .` | passed | Passed after adding `.dockerignore`; Dockerfile runs as non-root `app`. |
 | `docker build -f frontend/Dockerfile -t travelagenticai-frontend:test .` | passed | Passed after adding `.dockerignore`; Dockerfile runs as non-root `node`. |
 | Fresh clone verification | passed | See `docs/FRESH_CLONE_VERIFICATION.md`; backend, frontend, research, and E2E gates passed from a separate clone. |
+| `docker compose -p travelagenticai-deploy up -d --build` | passed | Frontend exposed at `http://127.0.0.1:18080`; backend stayed internal and healthy. |
+| `curl.exe -i http://127.0.0.1:18080/healthz` | passed | Nginx health returned `ok`. |
+| `curl.exe -i http://127.0.0.1:18080/api/v1/health` | passed | API health returned through the frontend proxy. |
+| Proxied trip creation through `:18080/api/v1/trips` | passed | Trip completed with destination Goa and reconciled budget total. |
 
 ## Current Gate Status
 
 - Functional gate: partial. The local planner works end to end, but live booking, payments, account auth, and real inventory remain out of scope.
-- Engineering gate: mostly complete for this local demo. CI now includes secret scan, backend audit, coverage, lint, mypy, pytest, frontend audit, lint, typecheck, test, build, E2E, research, and Docker build jobs. Local Docker builds and fresh-clone verification pass.
+- Engineering gate: complete for local/single-host demo deployment. CI now includes secret scan, backend audit, coverage, lint, mypy, pytest, frontend audit, lint, typecheck, test, build, E2E, research, and Docker build jobs. Local Docker builds, Docker Compose deploy, and fresh-clone verification pass.
 - Research gate: partial. Benchmarks and ablations are reproducible; scholarly related-work citations and user studies are intentionally not claimed.
 - UX gate: partial. Planner, saved trips, providers, research, methodology, map, budget, revision, and export views exist; accessibility automation and broader E2E coverage remain thin.
 
