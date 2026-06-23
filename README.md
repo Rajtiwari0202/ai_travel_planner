@@ -4,6 +4,15 @@ TravelAgenticAI is a local-first agentic travel planning and itinerary optimizat
 
 The default demo uses free/open-source software, curated local datasets, deterministic estimates, SQLite persistence, and a template narrative provider. No paid API or LLM is required.
 
+## Release Readiness
+
+- Local/single-host research demo: about 90-95% complete.
+- Research-paper submission: about 70-80% complete; verified citations, deeper experiments, statistical treatment, and human evaluation remain.
+- Public production SaaS: about 55-65% complete; authentication, HTTPS, backups, hosted secrets, monitoring, abuse protection, and production operations remain.
+- Actual booking platform: not applicable yet; payments and verified flight/hotel inventory are intentionally absent.
+
+Suggested release title: **TravelAgenticAI v1.0.0 - Local-First Research Release**.
+
 ## Current Feature Status
 
 Implemented:

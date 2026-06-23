@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-23
 
-TravelAgenticAI now has a verified Docker Compose deployment path for a local or single-host demo deployment.
+TravelAgenticAI now has a verified Docker Compose deployment path for a local or single-host demo deployment. This is suitable for a local-first research release, not a public SaaS or booking platform release.
 
 ## Production-Style Local Deploy
 
@@ -65,3 +65,10 @@ Before exposing this outside a trusted demo environment:
 - Run image vulnerability scanning in the deployment registry or CI platform.
 
 This is deployment-ready as a local/single-host demo. It is not a live booking, payment, or authenticated SaaS system.
+
+## Release Scope
+
+- Local/single-host research demo: about 90-95% complete.
+- Research-paper submission: about 70-80% complete.
+- Public production SaaS: about 55-65% complete.
+- Actual booking platform: not applicable until verified inventory and payments are added.

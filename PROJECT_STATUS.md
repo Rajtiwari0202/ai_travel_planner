@@ -8,6 +8,17 @@ TravelAgenticAI is now a hardened local-first, full-stack, explainable agentic t
 
 This is not a hosted production booking product. Authentication, live booking inventory, payments, production data contracts, and verified user studies remain outside the current local completion pass.
 
+## Completion Levels
+
+- Local/single-host research demo: about 90-95% complete.
+- Research-paper submission: about 70-80% complete because citations, deeper experiments, sensitivity analysis, statistical treatment, and human evaluation remain.
+- Public production SaaS: about 55-65% complete because authentication, HTTPS, backups, hosted secrets, monitoring, abuse protection, and production operations remain.
+- Actual booking platform: not applicable yet because payments and verified flight/hotel inventory are intentionally absent.
+
+Portfolio description:
+
+TravelAgenticAI is a local-first, explainable multi-agent travel planning and itinerary optimization platform. It coordinates specialized research, weather, geospatial, budgeting, optimization, narrative, and validation stages; uses OR-Tools CP-SAT for budget-constrained scheduling; streams agent progress through SSE; and supports itinerary revision, mapping, persistence, reproducible benchmarks, and Docker-based deployment. Commercial travel prices are clearly presented as estimates rather than live booking inventory.
+
 ## Repository Target
 
 - Working folder: `F:\travelAgenticAi`
