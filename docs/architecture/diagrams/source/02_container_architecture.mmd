@@ -1,0 +1,6 @@
+flowchart LR
+  browser["Browser"] --> nginx["Nginx or Render Static Site"]
+  nginx --> react["React + Vite build"]
+  react --> api["FastAPI container / Render Web Service"]
+  api --> sqlalchemy["SQLAlchemy repository layer"]
+  sqlalchemy --> db["SQLite volume or Neon PostgreSQL"]

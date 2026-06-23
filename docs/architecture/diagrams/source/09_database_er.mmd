@@ -1,0 +1,19 @@
+erDiagram
+  TRIP_RECORDS ||--o{ AGENT_EVENT_RECORDS : has
+  TRIP_RECORDS {
+    string trip_id PK
+    string status
+    string owner_hash
+    text request_json
+    text plan_json
+    datetime created_at
+    datetime updated_at
+  }
+  AGENT_EVENT_RECORDS {
+    int id PK
+    string trip_id FK
+    int sequence
+    string event_id
+    text event_json
+    datetime created_at
+  }

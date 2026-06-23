@@ -1,0 +1,6 @@
+flowchart LR
+  cases["Benchmark cases"] --> benchmarks["Run baselines and CP-SAT"]
+  benchmarks --> csv["CSV results"]
+  csv --> ablations["Ablations"]
+  csv --> figures["Charts"]
+  figures --> paper["Research draft"]

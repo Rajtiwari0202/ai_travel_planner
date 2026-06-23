@@ -1,0 +1,7 @@
+flowchart TB
+  candidates["Activities, transport, lodging"] --> filters["Hard filters"]
+  filters --> cpsat["OR-Tools CP-SAT"]
+  cpsat --> schedule["Day schedule"]
+  schedule --> score["Score breakdown"]
+  filters --> fallback["Deterministic heuristic fallback"]
+  fallback --> schedule

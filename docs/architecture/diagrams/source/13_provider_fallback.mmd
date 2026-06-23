@@ -1,0 +1,9 @@
+flowchart TB
+  request["Need travel data"] --> live{"Live provider enabled?"}
+  live -->|yes| external["External free API"]
+  live -->|no| local["Curated local provider"]
+  external --> ok{"Success?"}
+  ok -->|yes| label["Live/cached label"]
+  ok -->|no| fallback["Deterministic fallback"]
+  local --> label
+  fallback --> label

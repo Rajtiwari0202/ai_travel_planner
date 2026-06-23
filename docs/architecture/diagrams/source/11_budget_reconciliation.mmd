@@ -1,0 +1,8 @@
+flowchart LR
+  transport["Transport"] --> total["Budget total"]
+  lodging["Rooms x nights"] --> total
+  activities["Activities"] --> total
+  local["Local transport"] --> total
+  food["Food"] --> total
+  fees["Fees and contingency"] --> total
+  total --> remaining["Remaining / infeasible"]

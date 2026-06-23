@@ -1,0 +1,10 @@
+flowchart LR
+  start["Plan started"] --> intent["Intent"]
+  intent --> dest["Destination"]
+  dest --> transport["Transport"]
+  transport --> lodging["Accommodation"]
+  lodging --> weather["Weather"]
+  weather --> opt["Optimization"]
+  opt --> writer["Writer"]
+  writer --> critic["Critic"]
+  critic --> done["Plan completed"]

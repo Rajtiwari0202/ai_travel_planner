@@ -1,0 +1,7 @@
+flowchart LR
+  instruction["Revision instruction"] --> parse["Deterministic signal parsing"]
+  parse --> request["Updated request"]
+  request --> replan["Replan"]
+  replan --> compare["Compare previous itinerary"]
+  compare --> history["Append revision history"]
+  history --> save["Save updated plan"]

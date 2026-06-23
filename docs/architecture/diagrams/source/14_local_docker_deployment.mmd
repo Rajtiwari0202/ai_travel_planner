@@ -1,0 +1,6 @@
+flowchart LR
+  browser["Browser"] --> front["Frontend Nginx :18080"]
+  front --> api["Backend FastAPI internal :8000"]
+  api --> volume["SQLite Docker volume"]
+  front --> health["/healthz"]
+  api --> ready["/api/v1/health/ready"]
