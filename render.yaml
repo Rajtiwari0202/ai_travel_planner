@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: travelagenticai-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    branch: main
+    buildCommand: python -m pip install -r requirements.txt
+    preDeployCommand: python scripts/migrate.py
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health/ready
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_NAME
+        value: TravelAgenticAI
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: ENABLE_API_DOCS
+        value: "false"
+      - key: DEMO_MODE
+        value: "true"
+      - key: ANONYMOUS_TRIP_TTL_DAYS
+        value: "7"
+      - key: RATE_LIMIT_ENABLED
+        value: "true"
+      - key: RATE_LIMIT_REQUESTS
+        value: "90"
+      - key: RATE_LIMIT_WINDOW_SECONDS
+        value: "60"
+      - key: PROVIDER_TIMEOUT_SECONDS
+        value: "4"
+      - key: PROVIDER_RETRY_COUNT
+        value: "1"
+
+  - type: static
+    name: travelagenticai-web
+    rootDir: frontend
+    branch: main
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        sync: false
+      - key: VITE_APP_ENV
+        value: production
+      - key: VITE_DEMO_MODE
+        value: "true"
+      - key: VITE_ENABLE_RESEARCH_PAGE
+        value: "true"
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -8,7 +8,24 @@ import type {
   TripRequest,
 } from "../types/api";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000/api/v1";
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api/v1";
+const SESSION_KEY = "travelagenticai.anonymousSession";
+
+function getAnonymousSession(): string {
+  const existing = window.localStorage.getItem(SESSION_KEY);
+  if (existing) {
+    return existing;
+  }
+  const bytes = new Uint8Array(32);
+  window.crypto.getRandomValues(bytes);
+  const token = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  window.localStorage.setItem(SESSION_KEY, token);
+  return token;
+}
+
+function authHeaders(): Record<string, string> {
+  return { "X-Anonymous-Session": getAnonymousSession() };
+}
 
 const tripCreateSchema = z.object({
   trip_id: z.string(),
@@ -32,6 +49,7 @@ async function requestJson<T>(path: string, init?: RequestInit, schema?: z.ZodTy
     ...init,
     headers: {
       "Content-Type": "application/json",
+      ...authHeaders(),
       ...(init?.headers ?? {}),
     },
   });
@@ -80,7 +98,8 @@ export function searchDestinations(query = ""): Promise<DestinationSearchResult[
 }
 
 export function eventSourceUrl(tripId: string): string {
-  return `${API_BASE}/trips/${tripId}/events`;
+  const separator = API_BASE.includes("?") ? "&" : "?";
+  return `${API_BASE}/trips/${tripId}/events${separator}session=${encodeURIComponent(getAnonymousSession())}`;
 }
 
 export function parseAgentEvent(raw: MessageEvent<string>): AgentEvent {

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
+import hashlib
+from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
 from sqlalchemy import func, select
@@ -10,10 +11,22 @@ from app.models.trip_record import AgentEventRecord, TripRecord
 from app.schemas.trip import AgentEvent, TripPlan, TripRecordResponse, TripRequest, TripStatus
 
 
-def create_trip(db: Session, request: TripRequest, trip_id: str | None = None) -> TripRecord:
+def owner_hash_from_token(token: str | None) -> str | None:
+    if not token:
+        return None
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def create_trip(
+    db: Session,
+    request: TripRequest,
+    trip_id: str | None = None,
+    owner_token: str | None = None,
+) -> TripRecord:
     record = TripRecord(
         trip_id=trip_id or str(uuid4()),
         status=TripStatus.PLANNING.value,
+        owner_hash=owner_hash_from_token(owner_token),
         request_json=request.model_dump_json(),
         plan_json=None,
     )
@@ -27,8 +40,19 @@ def get_trip(db: Session, trip_id: str) -> TripRecord | None:
     return db.get(TripRecord, trip_id)
 
 
-def list_trips(db: Session) -> list[TripRecord]:
+def owns_trip(record: TripRecord, owner_token: str | None) -> bool:
+    if record.owner_hash is None:
+        return True
+    return record.owner_hash == owner_hash_from_token(owner_token)
+
+
+def list_trips(db: Session, owner_token: str | None = None) -> list[TripRecord]:
+    owner_hash = owner_hash_from_token(owner_token)
     stmt = select(TripRecord).order_by(TripRecord.created_at.desc()).limit(50)
+    if owner_hash is not None:
+        stmt = stmt.where(TripRecord.owner_hash == owner_hash)
+    else:
+        stmt = stmt.where(TripRecord.owner_hash.is_(None))
     return list(db.scalars(stmt))
 
 
@@ -72,6 +96,17 @@ def delete_trip(db: Session, trip_id: str) -> bool:
     db.delete(record)
     db.commit()
     return True
+
+
+def cleanup_expired_demo_trips(db: Session, ttl_days: int) -> int:
+    if ttl_days <= 0:
+        return 0
+    cutoff = datetime.now(UTC) - timedelta(days=ttl_days)
+    records = list(db.scalars(select(TripRecord).where(TripRecord.created_at < cutoff)))
+    for record in records:
+        db.delete(record)
+    db.commit()
+    return len(records)
 
 
 def append_event(db: Session, event: AgentEvent) -> AgentEventRecord:
