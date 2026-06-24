@@ -1,0 +1,10 @@
+stateDiagram-v2
+  [*] --> planning
+  planning --> complete
+  planning --> infeasible
+  planning --> failed
+  complete --> planning: revision
+  infeasible --> planning: revision
+  complete --> deleted
+  failed --> deleted
+  deleted --> [*]

@@ -1,0 +1,9 @@
+flowchart LR
+  push["Push / PR"] --> ci["GitHub Actions"]
+  ci --> backend["Backend lint, type, tests, audit"]
+  ci --> frontend["Frontend lint, type, tests, build, audit"]
+  ci --> e2e["Playwright E2E"]
+  ci --> research["Research smoke"]
+  ci --> docker["Docker build"]
+  ci --> merge["Merge to main"]
+  merge --> render["Render auto deploy"]

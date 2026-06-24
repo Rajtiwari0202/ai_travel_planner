@@ -1,0 +1,6 @@
+flowchart LR
+  user["Traveler / evaluator"] --> web["React web app"]
+  web --> api["FastAPI API"]
+  api --> db["SQLite local / PostgreSQL public"]
+  api --> providers["Deterministic providers and optional live weather"]
+  api --> research["Research benchmark artifacts"]

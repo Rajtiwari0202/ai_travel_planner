@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, Download, RefreshCw } from "lucide-react";
-import { createTrip, getTrip, providerStatus, reviseTrip } from "../../services/api";
+import { createTrip, getTrip, providerStatus, reviseTrip, waitForReadiness } from "../../services/api";
 import { useTripEvents } from "../../hooks/useTripEvents";
 import type { ProviderStatus, TripRecordResponse, TripRequest } from "../../types/api";
 import { AgentTimeline } from "../agents/AgentTimeline";
@@ -16,6 +16,7 @@ export function PlannerWorkspace() {
   const [record, setRecord] = useState<TripRecordResponse | null>(null);
   const [providers, setProviders] = useState<ProviderStatus[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const [wakeMessage, setWakeMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [revisionText, setRevisionText] = useState("");
   const [revisionBusy, setRevisionBusy] = useState(false);
@@ -71,13 +72,25 @@ export function PlannerWorkspace() {
     setSubmitting(true);
     setError(null);
     setRecord(null);
+    setWakeMessage("Checking planning service readiness.");
     try {
+      await waitForReadiness((_attempt, elapsedMs) => {
+        if (elapsedMs > 1200) {
+          setWakeMessage(
+            `The planning service is waking up. Free demo instances can take up to a minute after inactivity. Elapsed ${Math.round(
+              elapsedMs / 1000,
+            )}s.`,
+          );
+        }
+      });
+      setWakeMessage(null);
       const response = await createTrip(payload);
       setTripId(response.trip_id);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unable to create trip.");
     } finally {
       setSubmitting(false);
+      setWakeMessage(null);
     }
   };
 
@@ -132,6 +145,11 @@ export function PlannerWorkspace() {
       <section className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 lg:grid-cols-[390px_minmax(0,1fr)]">
         <div className="space-y-5">
           <PlannerForm onSubmit={handleSubmit} busy={submitting} />
+          {wakeMessage && (
+            <div className="rounded-lg border border-tide/25 bg-tide/10 p-3 text-sm leading-6 text-ink">
+              {wakeMessage}
+            </div>
+          )}
           <AgentTimeline events={events} connected={connected} progress={latestProgress} statusLabel={statusLabel} />
           {(error || eventError) && (
             <div className="flex gap-3 rounded-lg border border-clay/30 bg-clay/10 p-3 text-sm text-clay">

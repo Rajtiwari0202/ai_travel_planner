@@ -1,0 +1,8 @@
+flowchart TB
+  browser["Browser with anonymous token"] --> boundary["Public HTTPS boundary"]
+  boundary --> api["FastAPI"]
+  api --> hash["Token hash only"]
+  hash --> db["Database"]
+  api --> logs["Sanitized logs"]
+  secrets["Provider secrets / database URL"] --> render["Provider secret storage"]
+  render --> api

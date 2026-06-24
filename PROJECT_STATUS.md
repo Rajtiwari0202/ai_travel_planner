@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 ## Summary
 
@@ -24,7 +24,41 @@ TravelAgenticAI is a local-first, explainable multi-agent travel planning and it
 - Working folder: `F:\travelAgenticAi`
 - User-designated GitHub repo: `https://github.com/Rajtiwari0202/ai_travel_planner`
 - Current remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
-- Continuation branch: `codex/research-production-completion`
+- Current public-demo branch: `codex/public-deployment-v1.1`
+- Preserved release tag: `v1.0.0`
+
+## v1.1 Public Demo Progress
+
+Completed locally:
+
+- Created `codex/public-deployment-v1.1`.
+- Removed obsolete prototype and duplicate frontend/backend files.
+- Simplified `AGENTS.md` and archived historical prompts in `docs/codex/`.
+- Added PostgreSQL-ready SQLAlchemy/Alembic persistence while preserving SQLite locally.
+- Added Render Blueprint scaffolding and Neon deployment documentation.
+- Added anonymous session ownership for public saved trips.
+- Added readiness/liveness/version endpoints.
+- Added public-demo request size and rate-limit guards.
+- Added frontend readiness retry/wake-up UX.
+- Rebuilt documentation library and rendered 18 architecture diagrams in Mermaid, SVG, and PNG.
+- Rebuilt README with truthful public-demo status.
+- Added GitHub templates and code of conduct.
+
+Verified locally:
+
+- Backend coverage/test/lint/typecheck/audit gates passed.
+- Frontend prune/dedupe/audit/lint/typecheck/test/build/E2E gates passed.
+- Research and docs validation passed.
+- Docker Compose deployment passed through Nginx proxy.
+- Proxied create-trip and revise-trip smoke test passed.
+
+Blocked pending provider authentication:
+
+- Create Neon database.
+- Create Render static frontend and FastAPI backend services.
+- Configure provider environment variables.
+- Verify public frontend/backend/SSE/persistence/revision/export flow.
+- Merge to `main`, tag `v1.1.0`, and publish GitHub release after public verification.
 
 ## Implemented
 

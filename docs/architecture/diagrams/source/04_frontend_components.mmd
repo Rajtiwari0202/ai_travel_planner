@@ -1,0 +1,10 @@
+flowchart TB
+  app["App router"] --> planner["Planner workspace"]
+  planner --> form["Planner form"]
+  planner --> timeline["Agent timeline"]
+  planner --> itinerary["Itinerary results"]
+  planner --> budget["Budget panel"]
+  planner --> map["Leaflet map"]
+  app --> saved["Saved trips"]
+  app --> research["Research page"]
+  planner --> api["API client with anonymous session"]

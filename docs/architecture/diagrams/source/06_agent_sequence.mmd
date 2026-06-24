@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant B as Browser
+  participant A as FastAPI
+  participant O as Orchestrator
+  participant D as Database
+  B->>A: POST /trips
+  A->>D: Create trip
+  A-->>B: 202 + events URL
+  B->>A: Subscribe SSE
+  O->>D: Persist events
+  O-->>B: Stream stages
+  O->>D: Save plan
+  B->>A: GET /trips/{id}
+  A-->>B: Complete itinerary

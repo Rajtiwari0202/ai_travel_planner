@@ -1,0 +1,6 @@
+flowchart LR
+  browser["Browser HTTPS"] --> static["Render Static Site"]
+  static --> api["Render FastAPI Web Service"]
+  api --> neon["Neon PostgreSQL"]
+  api --> logs["Render logs"]
+  static --> assets["Vite assets"]

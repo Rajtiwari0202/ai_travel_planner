@@ -1,0 +1,9 @@
+flowchart TB
+  routes["API routes"] --> orchestrator["Trip orchestrator"]
+  orchestrator --> providers["Provider services"]
+  orchestrator --> weather["Weather service"]
+  orchestrator --> optimizer["Optimization planner"]
+  optimizer --> budget["Budget reconciliation"]
+  orchestrator --> writer["Narrative provider"]
+  routes --> repo["Trip repository"]
+  repo --> db["Database"]

@@ -17,6 +17,7 @@ class TripRecord(Base):
 
     trip_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     status: Mapped[str] = mapped_column(String(32), index=True)
+    owner_hash: Mapped[str | None] = mapped_column(String(96), nullable=True, index=True)
     request_json: Mapped[str] = mapped_column(Text)
     plan_json: Mapped[str | None] = mapped_column(Text, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now)
@@ -51,3 +52,4 @@ class AgentEventRecord(Base):
 
 
 Index("ix_agent_event_trip_sequence", AgentEventRecord.trip_id, AgentEventRecord.sequence)
+Index("ix_trip_owner_created", TripRecord.owner_hash, TripRecord.created_at)

@@ -68,6 +68,7 @@ poetry.lock
 .env
 .env.*
 !.env.example
+.codex-secrets/
 venv/
 env/
 backend/venv/

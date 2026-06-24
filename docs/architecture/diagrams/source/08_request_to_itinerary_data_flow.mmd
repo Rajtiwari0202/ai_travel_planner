@@ -1,0 +1,8 @@
+flowchart LR
+  request["Trip request"] --> validation["Validation"]
+  validation --> candidates["Candidates"]
+  candidates --> weather["Weather alignment"]
+  weather --> optimize["Schedule optimization"]
+  optimize --> budget["Budget reconciliation"]
+  budget --> narrative["Narrative summary"]
+  narrative --> response["Persisted itinerary"]
