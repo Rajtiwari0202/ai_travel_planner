@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("creates a trip and renders the itinerary workspace", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/", { waitUntil: "domcontentloaded" });
   await expect(page.getByRole("heading", { name: /explainable agentic travel plans/i })).toBeVisible({
     timeout: 30_000,
   });
