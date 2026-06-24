@@ -1,6 +1,6 @@
 # Deployment Checklist
 
-Use this checklist before publishing a demo instance.
+Use this checklist before publishing or updating a demo instance.
 
 - [ ] Confirm branch and commit to deploy.
 - [ ] Run `npm audit` in `frontend`.
@@ -9,9 +9,11 @@ Use this checklist before publishing a demo instance.
 - [ ] Run `docker compose config`.
 - [ ] Run `docker compose up -d --build`.
 - [ ] Confirm `http://HOST:PORT/healthz` returns `ok`.
-- [ ] Confirm `http://HOST:PORT/api/v1/health` returns `{"status":"ok","service":"TravelAgenticAI"}`.
+- [ ] Confirm `http://HOST:PORT/api/v1/health/ready` returns database ready locally.
 - [ ] Create one test trip through the deployed app.
 - [ ] Confirm the SQLite volume location and backup plan.
-- [ ] Configure HTTPS/TLS if reachable outside localhost.
-- [ ] Restrict CORS to the public origin.
+- [ ] For Render, confirm `https://travelagenticai-api.onrender.com/api/v1/health/ready`.
+- [ ] For Render, confirm `https://travelagenticai-web.onrender.com`.
+- [ ] Restrict CORS to the public frontend origin.
+- [ ] Verify anonymous ownership isolation with two browser sessions or two session headers.
 - [ ] Do not enter real payment, passport, or private booking credentials; this app is not a booking system.

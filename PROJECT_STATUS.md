@@ -4,15 +4,16 @@ Last updated: 2026-06-24
 
 ## Summary
 
-TravelAgenticAI is now a hardened local-first, full-stack, explainable agentic travel-planning demo with a verified Docker Compose deployment path. It works without paid APIs or an LLM, persists trips locally, streams backend agent events, includes CP-SAT optimization with deterministic fallbacks, and ships reproducible research artifacts.
+TravelAgenticAI is now a hardened full-stack, explainable agentic travel-planning research demo with verified local Docker Compose deployment and a public Render + Neon deployment. It works without paid APIs or an LLM, persists trips, streams backend agent events, includes CP-SAT optimization with deterministic fallbacks, and ships reproducible research artifacts.
 
-This is not a hosted production booking product. Authentication, live booking inventory, payments, production data contracts, and verified user studies remain outside the current local completion pass.
+This is not a production booking product. Authentication, live booking inventory, payments, production data contracts, long-term monitoring, backups, abuse operations, and verified user studies remain outside the current public research demo scope.
 
 ## Completion Levels
 
-- Local/single-host research demo: about 90-95% complete.
+- Local/single-host research demo: about 95% complete.
 - Research-paper submission: about 70-80% complete because citations, deeper experiments, sensitivity analysis, statistical treatment, and human evaluation remain.
-- Public production SaaS: about 55-65% complete because authentication, HTTPS, backups, hosted secrets, monitoring, abuse protection, and production operations remain.
+- Public research demo: about 90% complete.
+- Public production SaaS: about 60-65% complete because authentication, backups, monitoring, abuse protection, production operations, and production data contracts remain.
 - Actual booking platform: not applicable yet because payments and verified flight/hotel inventory are intentionally absent.
 
 Portfolio description:
@@ -24,12 +25,14 @@ TravelAgenticAI is a local-first, explainable multi-agent travel planning and it
 - Working folder: `F:\travelAgenticAi`
 - User-designated GitHub repo: `https://github.com/Rajtiwari0202/ai_travel_planner`
 - Current remote: `https://github.com/Rajtiwari0202/ai_travel_planner.git`
-- Current public-demo branch: `codex/public-deployment-v1.1`
+- Current branch: `main`
 - Preserved release tag: `v1.0.0`
+- Current public demo frontend: `https://travelagenticai-web.onrender.com`
+- Current public demo backend: `https://travelagenticai-api.onrender.com`
 
 ## v1.1 Public Demo Progress
 
-Completed locally:
+Completed:
 
 - Created `codex/public-deployment-v1.1`.
 - Removed obsolete prototype and duplicate frontend/backend files.
@@ -43,22 +46,26 @@ Completed locally:
 - Rebuilt documentation library and rendered 18 architecture diagrams in Mermaid, SVG, and PNG.
 - Rebuilt README with truthful public-demo status.
 - Added GitHub templates and code of conduct.
+- Created Neon PostgreSQL project and ran Alembic migration.
+- Created Render backend and frontend services.
+- Pinned backend Python runtime for Render deploy reproducibility.
+- Verified public frontend, backend health, Neon persistence, anonymous ownership isolation, revision, and browser screenshots.
 
-Verified locally:
+Verified locally and publicly:
 
 - Backend coverage/test/lint/typecheck/audit gates passed.
 - Frontend prune/dedupe/audit/lint/typecheck/test/build/E2E gates passed.
 - Research and docs validation passed.
 - Docker Compose deployment passed through Nginx proxy.
 - Proxied create-trip and revise-trip smoke test passed.
+- Public Render backend readiness passed.
+- Public trip create/get/list and revise flow passed against Neon persistence.
+- Public browser flow rendered and screenshots were captured at `docs/assets/screenshots/public-demo-desktop.png` and `docs/assets/screenshots/public-demo-mobile.png`.
 
-Blocked pending provider authentication:
+Remaining release work:
 
-- Create Neon database.
-- Create Render static frontend and FastAPI backend services.
-- Configure provider environment variables.
-- Verify public frontend/backend/SSE/persistence/revision/export flow.
-- Merge to `main`, tag `v1.1.0`, and publish GitHub release after public verification.
+- Tag `v1.1.0`.
+- Publish the GitHub release.
 
 ## Implemented
 
@@ -94,6 +101,9 @@ Passed:
 - Secret scan: high-confidence private key/token/password patterns -> no matches
 - Docker: backend and frontend image builds passed locally
 - Docker Compose deploy: `docker compose -p travelagenticai-deploy up -d --build` passed; `http://127.0.0.1:18080/healthz` and `/api/v1/health` passed; proxied trip creation completed.
+- Public deploy: `https://travelagenticai-api.onrender.com/api/v1/health/ready` returned ready with database ok.
+- Public smoke: `POST /api/v1/trips` returned 202, persisted fetch/list returned 200, revision returned 200 with revision history, and a different anonymous session received 404 for the same trip.
+- Public browser: desktop and mobile Playwright passes rendered the deployed frontend through itinerary completion.
 - Fresh clone: backend, frontend, research, and E2E gates passed from `F:\travelAgenticAi-fresh-verify-20260622-195819`
 
 Warnings and notes:
@@ -113,7 +123,7 @@ Warnings and notes:
 ## Remaining Limitations
 
 - No live booking, payment, or real-time flight/hotel availability.
-- No production auth, user accounts, or hosted secrets management.
+- No production auth or user accounts.
 - Optimizer does not yet model every production constraint such as verified opening hours, OSRM route matrices, or arrival/departure windows.
 - Live weather is optional and disabled by default.
 - E2E and accessibility coverage are still thin.

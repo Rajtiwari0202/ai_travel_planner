@@ -1,8 +1,13 @@
 # Deployment Notes
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
-TravelAgenticAI now has a verified Docker Compose deployment path for a local or single-host demo deployment. This is suitable for a local-first research release, not a public SaaS or booking platform release.
+TravelAgenticAI has two verified deployment paths:
+
+- Local/single-host Docker Compose deployment.
+- Public research demo deployment on Render with Neon PostgreSQL.
+
+This is suitable for a research and portfolio release. It is not a production SaaS or booking platform release.
 
 ## Production-Style Local Deploy
 
@@ -53,22 +58,31 @@ curl.exe -i http://127.0.0.1:18080/api/v1/health
 
 A proxied trip creation request through `http://127.0.0.1:18080/api/v1/trips` completed successfully.
 
-## Hosted Deployment Requirements
+## Public Research Demo
 
-Before exposing this outside a trusted demo environment:
+Verified public URLs:
 
-- Put HTTPS/TLS in front of the frontend service.
-- Set `FRONTEND_PORT`, `CORS_ORIGINS`, and any public origin values for the target host.
+- Frontend: `https://travelagenticai-web.onrender.com`
+- Backend readiness: `https://travelagenticai-api.onrender.com/api/v1/health/ready`
+- Backend version: `https://travelagenticai-api.onrender.com/api/v1/version`
+
+The public demo uses Render HTTPS, a Render static frontend, a Render FastAPI web service, and Neon PostgreSQL. It was verified for health checks, database readiness, trip creation, persisted fetch/list, revision, anonymous ownership isolation, CORS negative behavior, and browser screenshots.
+
+## Production SaaS Requirements
+
+Before treating this as production SaaS:
+
 - Add authentication before storing real user trip data.
-- Configure host-level backups for the SQLite volume or migrate persistence to a managed database.
-- Add request-size/rate-limit enforcement at the edge proxy.
-- Run image vulnerability scanning in the deployment registry or CI platform.
-
-This is deployment-ready as a local/single-host demo. It is not a live booking, payment, or authenticated SaaS system.
+- Add backup and restore procedures for managed PostgreSQL.
+- Add long-term monitoring, alerting, abuse operations, and incident response ownership.
+- Add external vulnerability scanning in the deployment registry or CI platform.
+- Add production data contracts for any live provider integrations.
+- Do not enter real payment, passport, or private booking credentials; this app is not a booking system.
 
 ## Release Scope
 
-- Local/single-host research demo: about 90-95% complete.
+- Local/single-host research demo: about 95% complete.
+- Public research demo: about 90% complete.
 - Research-paper submission: about 70-80% complete.
-- Public production SaaS: about 55-65% complete.
+- Public production SaaS: about 60-65% complete.
 - Actual booking platform: not applicable until verified inventory and payments are added.

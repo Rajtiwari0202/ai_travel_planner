@@ -49,7 +49,7 @@ async def health_ready() -> dict[str, str]:
 @router.get("/version")
 async def version() -> dict[str, str]:
     settings = get_settings()
-    return {"service": settings.app_name, "version": "1.1.0-dev", "environment": settings.environment}
+    return {"service": settings.app_name, "version": "1.1.0", "environment": settings.environment}
 
 
 @router.post("/trips", response_model=TripCreateResponse, status_code=202)

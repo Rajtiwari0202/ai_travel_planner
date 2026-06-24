@@ -38,7 +38,7 @@ def create_app() -> FastAPI:
 
     app = FastAPI(
         title=settings.app_name,
-        version="1.0.0",
+        version="1.1.0",
         description="Local-first agentic AI travel planner with deterministic optimization and transparent data labels.",
         docs_url="/docs" if settings.enable_api_docs else None,
         redoc_url="/redoc" if settings.enable_api_docs else None,

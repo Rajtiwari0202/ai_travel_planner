@@ -1,7 +1,7 @@
 # Deployment Gap Analysis
 
-Date: 2026-06-23
-Branch: `codex/public-deployment-v1.1`
+Date: 2026-06-24
+Branch: `main`
 
 ## Current State
 
@@ -10,9 +10,16 @@ The repository has a verified local/single-host Docker Compose deployment:
 - frontend: Nginx serving Vite build on host port `18080`
 - backend: FastAPI internal to Compose network
 - persistence: SQLite volume
-- health checks: frontend `/healthz`, backend `/api/v1/health`
+- health checks: frontend `/healthz`, backend `/api/v1/health/ready`
 
-## Public Demo Target
+The repository also has a verified public research demo:
+
+- frontend: `https://travelagenticai-web.onrender.com`
+- backend: `https://travelagenticai-api.onrender.com`
+- persistence: Neon PostgreSQL
+- public verification: health, readiness, create/get/list/revise, anonymous ownership isolation, CORS negative check, desktop and mobile screenshots
+
+## Public Demo Architecture
 
 Preferred zero-cost public architecture:
 
@@ -23,16 +30,23 @@ Browser
   -> Neon Free PostgreSQL
 ```
 
-## Gaps Before Public Deployment
+## Completed Public Deployment Work
 
-- PostgreSQL support and migrations must be added while preserving SQLite locally.
-- Anonymous ownership must protect saved public demo trips.
-- Production settings need typed configuration for CORS, docs, rate limits, request limits, and demo retention.
-- Render Blueprint infrastructure needs to be added.
-- Neon and Render resources require authenticated provider sessions.
-- Public URLs must only be committed after real verification.
-- Frontend needs graceful handling for free-service cold starts.
-- CI should include Markdown link validation and Mermaid validation/render checks.
+- PostgreSQL support and migrations were added while preserving SQLite locally.
+- Anonymous ownership protects saved public demo trips.
+- Production settings include CORS, docs, rate limits, request limits, and demo retention controls.
+- Render Blueprint infrastructure was added.
+- Neon and Render resources were created and verified.
+- Public URLs were committed only after verification.
+- Frontend handles free-service cold starts.
+- Docs validation and Mermaid render inventory are included.
+
+## Remaining Production Gaps
+
+- Authenticated user accounts are not implemented.
+- Long-term monitoring, alerting, backup, restore, and abuse operations are not complete.
+- The app does not integrate verified live flight/hotel inventory.
+- The app does not support payment, ticketing, or booking confirmation.
 
 ## Non-Goals
 

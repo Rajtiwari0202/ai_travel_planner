@@ -8,11 +8,17 @@ TravelAgenticAI is a local-first, explainable multi-agent travel planning and it
 
 ## Public Demo
 
-Public deployment is being prepared for the `v1.1.0` public research demo. Public URLs will be added only after the frontend, backend, persistence, SSE, revision, and export flow are verified end to end.
+- Frontend: https://travelagenticai-web.onrender.com
+- Backend health: https://travelagenticai-api.onrender.com/api/v1/health/ready
+- API version: https://travelagenticai-api.onrender.com/api/v1/version
+
+The public demo runs on Render with Neon PostgreSQL persistence. It has been verified for frontend load, backend readiness, trip creation, persisted fetch/list, anonymous session isolation, revision, and public browser rendering. Render free services can take a short time to wake after inactivity.
 
 ## Preview
 
 ![System architecture](docs/architecture/diagrams/rendered/15_public_render_neon_deployment.svg)
+
+![Public demo desktop screenshot](docs/assets/screenshots/public-demo-desktop.png)
 
 ## Key Capabilities
 
@@ -44,7 +50,7 @@ Local:
 Browser -> Nginx frontend container -> FastAPI backend container -> SQLite volume
 ```
 
-Public target:
+Public:
 
 ```text
 Browser -> Render Static Site -> Render FastAPI Web Service -> Neon PostgreSQL
@@ -101,13 +107,18 @@ npm run dev
 
 ## Public Deployment Summary
 
-The repository includes `render.yaml` for:
+The verified public research demo uses:
 
 - Render FastAPI web service
 - Render static frontend
 - Neon PostgreSQL via `DATABASE_URL`
 - Render health checks
 - build-time frontend API configuration
+
+Verified URLs:
+
+- Frontend: `https://travelagenticai-web.onrender.com`
+- Backend readiness: `https://travelagenticai-api.onrender.com/api/v1/health/ready`
 
 See `docs/deployment/RENDER_DEPLOYMENT.md`, `docs/deployment/NEON_SETUP.md`, and `docs/deployment/PUBLIC_ENVIRONMENT_VARIABLES.md`.
 
